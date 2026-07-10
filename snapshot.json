@@ -1,0 +1,22 @@
+{
+  "lastUpdated": "2026-07-11",
+  "note": "Baseline snapshot captured when the dashboard was first built. Weekly watch runs should diff future chart pulls against this file's 'entries' to find genuinely new songs, then overwrite this file with the fresh pull.",
+  "charts": {
+    "spotify": {
+      "source": "kworb.net Spotify Global Weekly",
+      "entries": ["Billie Jean|Michael Jackson","Dai Dai|Shakira ft. Burna Boy","Beauty And A Beat|Justin Bieber ft. Nicki Minaj","hate that i made you love me|Ariana Grande","stupid song|Olivia Rodrigo","SWIM|BTS","Babydoll|Dominic Fike","Earrings|Malcolm Todd","the cure|Olivia Rodrigo","drop dead|Olivia Rodrigo","Beat It|Michael Jackson","The One That Got Away|Katy Perry","Self Aware|Temper City","back to friends|sombr","honeybee|Olivia Rodrigo","Choosin' Texas|Ella Langley","Man I Need|Olivia Dean","End of Beginning|Djo","Iris|The Goo Goo Dolls","DtMF|Bad Bunny","Janice STFU|Drake","The Fate of Ophelia|Taylor Swift","ICONIC BY MISTAKE|LE SSERAFIM ft. ILLIT & KATSEYE","Die With A Smile|Lady Gaga ft. Bruno Mars","Chicago|Michael Jackson","Risk It All|Bruno Mars","Love Me Not|Ravyn Lenae","Lush Life|Zara Larsson","Dracula (JENNIE Remix)|Tame Impala ft. JENNIE","Raindance|Dave ft. Tems","Locked out of Heaven|Bruno Mars","So Easy (To Fall In Love)|Olivia Dean","BAILE INoLVIDABLE|Bad Bunny","Mr. Brightside|The Killers","On The Floor|Jennifer Lopez ft. Pitbull","BIRDS OF A FEATHER|Billie Eilish","NUEVAYoL|Bad Bunny","Sesi Potret|eńau ft. Ari Lesmana","Sailor Song|Gigi Perez","Cinderella|Mac Miller ft. Ty Dolla $ign","Life Goes On|Oliver Tree","I Knew It, I Knew You|Taylor Swift","Sweater Weather|The Neighbourhood","One Dance|Drake ft. Wizkid & Kyla","Ordinary|Alex Warren","Every Breath You Take|The Police","Don't Stop 'Til You Get Enough|Michael Jackson","Treat You Better|Shawn Mendes","WHERE IS MY HUSBAND!|RAYE","Golden|HUNTR/X ft. EJae, AUDREY NUNA & REI AMI"]
+    },
+    "youtube": {
+      "source": "Soundcharts.com YouTube Global / charts.youtube.com",
+      "entries": ["Dai Dai|Shakira & Burna Boy","Life Goes On|Oliver Tree","Miss You|Oliver Tree & Robin Schulz","Golden|HUNTR/X, EJAE, AUDREY NUNA, REI AMI","Waka Waka (This Time For Africa) [Live]|Shakira","ICONIC BY MISTAKE|LE SSERAFIM, ILLIT & KATSEYE","Shararat|Jasmine Sandlas, Madhubanti Bagchi & Shashwat Sachdev","Billie Jean (Single Version)|Michael Jackson","Gehra Hua|Shashwat Sachdev, Arijit Singh, Irshad Kamil, Armaan Khan","Beat It|Michael Jackson","Bairan|Banjaare","It's Me|ILLIT","Jithe Mera Ghar|Jasmine Sandlas, Satinder Sartaaj & Shashwat Sachdev","NO BATIDÃO|SLXUGHTER & ZXKAI","Beauty and a Beat|Nicki Minaj & Justin Bieber","Todo Lo Fue|Lenin Ramírez","Sheesha|Swara Verma & Mitta Ror","Cuando No Era Cantante|El Bogueto & Yung Beef","hate that i made you love me|Ariana Grande","Dracula (JENNIE Remix)|Tame Impala & JENNIE","REDRED|CORTIS","Smooth Criminal|Michael Jackson","Thriller Megamix|Michael Jackson","The One That Got Away|Katy Perry","Babydoll|Dominic Fike","Headlights|Alok, Alan Walker & KIDDO","Hileli|manifest & Ajda Pekkan","Sesi Potret|eńau & Ari Lesmana","Ya Borracho|Herencia De Grandes","Fortuner|Ruchika Jangid & Raj Mawar"]
+    },
+    "billboard": {
+      "source": "billboard.com Hot 100",
+      "entries": ["Choosin' Texas|Ella Langley","I Knew It, I Knew You|Taylor Swift","Be Her|Ella Langley","Janice STFU|Drake","Man I Need|Olivia Dean","I Can't Love You Anymore|Ella Langley & Morgan Wallen","Hate That I Made You Love Me|Ariana Grande","Dracula|Tame Impala & JENNIE","Drop Dead|Olivia Rodrigo","I Just Might|Bruno Mars","Stupid Song|Olivia Rodrigo","So Easy (To Fall In Love)|Olivia Dean","Boston|Stella Lefty","Risk It All|Bruno Mars","Homewrecker|sombr","Stateside|PinkPantheress With Zara Larsson","Midnight Sun|Zara Larsson","The Cure|Olivia Rodrigo","Spend Dat|Yung Miami","Be By You|Luke Combs"]
+    },
+    "melon": {
+      "source": "melon.com Top 100",
+      "entries": ["갑자기 (Suddenly)|I.O.I","REDRED|CORTIS","LOVE ATTACK|RESCENE","LEMONADE|aespa","It's Me|ILLIT","소문의 낙원|AKMU","캐치 캐치|YENA","기쁨, 슬픔, 아름다운 마음|AKMU","Drowning|WOODZ","사랑하게 될 거야|한로로","RUDE!|Hearts2Hearts","0+0|한로로","Pretty Girl|RESCENE","Good Goodbye|HWASA","Heavy Serenade|NMIXX","타임캡슐|DAVICHI","404 (New Era)|KiiiKiii","만찬가|TAEYEON","BANG BANG|IVE","Popcorn|D.O.","어떻게 이별까지 사랑하겠어, 널 사랑하는 거지|AKMU","Lemon Tang|Hearts2Hearts","어제보다 슬픈 오늘|WOODY","너에게 닿기를|10CM","Blue Valentine|NMIXX","너의 모든 순간|성시경","소나기|ECLIPSE","모르시나요|조째즈","Golden|KPop Demon Hunters Cast","멸종위기사랑|이찬혁"]
+    }
+  }
+}

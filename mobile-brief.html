@@ -1,0 +1,357 @@
+<title>차트 신곡 워치 · 곡 해부</title>
+<style>
+  :root{
+    --bg:#12141a; --bg-elevated:#1b1e27; --bg-card:#20232e;
+    --text:#ece7dc; --text-dim:#9a9fb3; --text-faint:#6b6f82;
+    --line:rgba(255,255,255,0.09); --line-strong:rgba(255,255,255,0.16);
+    --accent:#e8b23d; --accent-soft:rgba(232,178,61,0.14); --accent-text:#1a1508;
+    --c-spotify:#4fae6a; --c-youtube:#e2564c; --c-billboard:#6a97e0; --c-melon:#c3dc4f;
+    --header-bg:rgba(18,20,26,0.86);
+    --shadow:0 16px 34px -20px rgba(0,0,0,0.55);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4efe4; --bg-elevated:#ffffff; --bg-card:#fffdf8;
+      --text:#201d16; --text-dim:#5c5646; --text-faint:#8b8573;
+      --line:rgba(32,29,22,0.12); --line-strong:rgba(32,29,22,0.22);
+      --accent:#a8710a; --accent-soft:rgba(168,113,10,0.12); --accent-text:#fff9ec;
+      --c-spotify:#2f8a53; --c-youtube:#c8392f; --c-billboard:#3f6bc4; --c-melon:#6f8f1c;
+      --header-bg:rgba(244,239,228,0.86);
+      --shadow:0 16px 34px -22px rgba(32,29,22,0.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12141a; --bg-elevated:#1b1e27; --bg-card:#20232e;
+    --text:#ece7dc; --text-dim:#9a9fb3; --text-faint:#6b6f82;
+    --line:rgba(255,255,255,0.09); --line-strong:rgba(255,255,255,0.16);
+    --accent:#e8b23d; --accent-soft:rgba(232,178,61,0.14); --accent-text:#1a1508;
+    --c-spotify:#4fae6a; --c-youtube:#e2564c; --c-billboard:#6a97e0; --c-melon:#c3dc4f;
+    --header-bg:rgba(18,20,26,0.86);
+    --shadow:0 16px 34px -20px rgba(0,0,0,0.55);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4efe4; --bg-elevated:#ffffff; --bg-card:#fffdf8;
+    --text:#201d16; --text-dim:#5c5646; --text-faint:#8b8573;
+    --line:rgba(32,29,22,0.12); --line-strong:rgba(32,29,22,0.22);
+    --accent:#a8710a; --accent-soft:rgba(168,113,10,0.12); --accent-text:#fff9ec;
+    --c-spotify:#2f8a53; --c-youtube:#c8392f; --c-billboard:#3f6bc4; --c-melon:#6f8f1c;
+    --header-bg:rgba(244,239,228,0.86);
+    --shadow:0 16px 34px -22px rgba(32,29,22,0.28);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 18px 56px;}
+
+  .view{display:none;}
+  .view.active{display:block;animation:enter .28s ease both;}
+  @keyframes enter{from{opacity:0;transform:translateX(14px);}to{opacity:1;transform:translateX(0);}}
+  @media (prefers-reduced-motion: reduce){ .view.active{animation:none;} }
+
+  /* ---- topbar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:10;
+    background:var(--header-bg);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 16px) 18px 14px;
+    margin:0 -18px 20px;
+  }
+  .topbar-inner{max-width:480px;margin:0 auto;}
+  .eyebrow{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+  h1{font-size:22px;line-height:1.2;letter-spacing:-0.01em;margin:9px 0 4px;font-weight:800;}
+  .sub{font-size:13.5px;color:var(--text-dim);margin:0 0 12px;}
+  .summary-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .summary-pill{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+    background:var(--accent-soft);color:var(--accent);padding:5px 11px;border-radius:100px;
+  }
+  .chart-counts{display:flex;gap:8px;flex-wrap:wrap;}
+  .chart-count{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-faint);font-weight:650;}
+  .chart-count i{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .updated{font-size:11px;color:var(--text-faint);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;margin-top:10px;font-variant-numeric:tabular-nums;}
+
+  /* ---- back bar (detail views) ---- */
+  .backbar{
+    position:sticky; top:0; z-index:10;
+    background:var(--header-bg);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 12px) 18px 12px;
+    margin:0 -18px 20px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .back-btn{
+    display:flex; align-items:center; gap:4px;
+    font-size:14px; font-weight:650; color:var(--accent);
+    padding:6px 4px 6px 0;
+  }
+  .back-btn svg{width:18px;height:18px;}
+
+  /* ---- list cards ---- */
+  .empty{
+    background:var(--bg-elevated);border:1px solid var(--line);border-radius:16px;
+    padding:36px 20px;text-align:center;color:var(--text-dim);font-size:14px;box-shadow:var(--shadow);
+  }
+  .list-card{
+    display:block;
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-left:3px solid var(--card-accent, var(--accent));
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:12px;
+    box-shadow:var(--shadow);
+  }
+  .list-card:active{transform:scale(0.985);}
+  .lc-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
+  .lc-title{font-size:16.5px;font-weight:750;letter-spacing:-0.005em;line-height:1.3;}
+  .lc-artist{font-size:12.5px;color:var(--text-faint);margin-top:3px;}
+  .chevron-right{flex:none;width:20px;height:20px;color:var(--text-faint);margin-top:3px;}
+  .rank-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
+  .rank-badge{
+    font-size:10.5px;font-weight:750;padding:3px 8px;border-radius:100px;
+    color:var(--accent-text);white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+  .teaser{font-size:13px;color:var(--text-dim);margin-top:10px;line-height:1.55;
+    border-top:1px solid var(--line);padding-top:10px;}
+  .teaser b{color:var(--accent);font-weight:700;}
+
+  /* ---- detail view ---- */
+  .d-head{margin-bottom:18px;}
+  .d-title{font-size:23px;font-weight:800;letter-spacing:-0.01em;line-height:1.22;text-wrap:balance;}
+  .d-artist{font-size:14px;color:var(--text-dim);margin-top:4px;}
+  .genre-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .tagpill{
+    font-size:11px;font-weight:650;padding:4px 10px;border-radius:100px;
+    border:1px solid var(--line-strong);color:var(--text-dim);white-space:nowrap;
+  }
+  .theme-line{
+    font-size:13.5px;color:var(--text);background:var(--bg-card);
+    border-left:3px solid var(--card-accent, var(--accent));
+    padding:10px 14px;border-radius:0 8px 8px 0;margin:16px 0 12px;line-height:1.6;
+  }
+  .theme-line b{font-weight:750;color:var(--text-faint);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .credit-line{font-size:11.5px;color:var(--text-faint);line-height:1.65;margin-bottom:22px;}
+  .credit-line b{color:var(--text-dim);}
+
+  .qa-item{padding:16px 0;border-top:1px solid var(--line);}
+  .qa-item:first-of-type{border-top:none;padding-top:0;}
+  .qa-item .q{
+    font-size:11.5px;font-weight:700;letter-spacing:0.01em;color:var(--accent);
+    margin-bottom:6px;display:flex;gap:7px;align-items:baseline;
+  }
+  .qa-item .q .qn{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text-faint);}
+  .qa-item .ans{font-size:13.5px;color:var(--text-dim);line-height:1.68;}
+
+  .a2hs{
+    display:flex; gap:12px; align-items:flex-start;
+    background:var(--bg-card); border:1px dashed var(--line-strong); border-radius:14px;
+    padding:16px; margin-top:24px;
+  }
+  .a2hs .ico{flex:none;width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .a2hs h4{font-size:13.5px;margin:0 0 4px;font-weight:700;}
+  .a2hs p{font-size:12px;color:var(--text-faint);margin:0;line-height:1.6;}
+  .a2hs b{color:var(--text-dim);}
+
+  footer{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--text-faint);line-height:1.7;}
+</style>
+
+<div class="wrap">
+
+  <div class="view active" id="view-list">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="eyebrow">New Entry Watch</div>
+        <h1>이번 주 신곡 워치</h1>
+        <p class="sub">4개 차트에 새로 올라온 곡을 눌러보세요. 데스크탑판과 같은 방식으로 뜯어봤어요.</p>
+        <div class="summary-row">
+          <span class="summary-pill">🆕 신규 4곡</span>
+          <span class="chart-counts">
+            <span class="chart-count"><i style="background:var(--c-spotify)"></i>Spotify 2</span>
+            <span class="chart-count"><i style="background:var(--c-youtube)"></i>YouTube 3</span>
+            <span class="chart-count"><i style="background:var(--c-melon)"></i>Melon 3</span>
+          </span>
+        </div>
+        <div class="updated">2026.07.11 기준 · 첫 번째 에디션</div>
+      </div>
+    </div>
+
+    <div id="listCards"></div>
+
+    <div class="a2hs">
+      <div class="ico">🍎</div>
+      <div>
+        <h4>아이폰 — 홈 화면에 추가</h4>
+        <p><b>사파리</b>에서 이 페이지를 열고 하단 <b>공유 버튼 → "홈 화면에 추가"</b>를 누르면 아이콘 하나로 바로 열리는 앱처럼 쓸 수 있어요. 신곡이 나올 때마다 같은 링크가 갱신돼요.</p>
+      </div>
+    </div>
+
+    <div class="a2hs">
+      <div class="ico">🤖</div>
+      <div>
+        <h4>안드로이드 — 홈 화면에 추가</h4>
+        <p><b>Chrome</b>에서 이 페이지를 열고 오른쪽 위 <b>점 3개 메뉴(⋮) → "홈 화면에 추가" 또는 "앱 설치"</b>를 누르세요. 이름 확인 후 <b>"추가"</b>를 누르면 홈 화면·앱 서랍에 아이콘이 생기고, 탭하면 브라우저 주소창 없이 앱처럼 전체 화면으로 열려요. (삼성 인터넷 브라우저는 <b>메뉴 → "현재 페이지 추가" → "홈 화면"</b>)</p>
+      </div>
+    </div>
+
+    <footer>
+      신곡이 새로 차팅할 때마다 자동으로 갱신됩니다. 이번 주 새 진입이 없으면 "신규 0곡"으로 짧게 표시돼요.<br>
+      전체 분석(공통점·차이점·트렌드 예측)은 데스크탑용 대시보드에서 확인하세요.
+    </footer>
+  </div>
+
+  <div id="detailContainer"></div>
+
+</div>
+
+<script>
+(function(){
+  var COLORS = {S:'var(--c-spotify)', Y:'var(--c-youtube)', B:'var(--c-billboard)', M:'var(--c-melon)'};
+  var CHARTNAME = {S:'Spotify', Y:'YouTube', B:'Billboard', M:'Melon'};
+  var QLABELS = [
+    '이 곡의 한 줄 아이디어는?','가장 기억나는 5초는?','가장 독창적인 요소는?','왜 기억에 남는가?',
+    '감정이 가장 크게 변하는 순간은?','긴장은 어떻게 만드는가?','해소는 어떻게 하는가?',
+    '반복되는 패턴은?','의외의 반전은?','내 곡에 가져갈 아이디어 3개는?'
+  ];
+
+  var songs = [
+    {
+      id:'s0', title:'ICONIC BY MISTAKE', artist:'LE SSERAFIM × ILLIT × KATSEYE', dot:'Y',
+      ranks:[['S',23],['Y',6]], mech:'K팝 크로스 레이블 콜라보',
+      genre:['얼터너티브 팝','하이퍼팝'], theme:'악플러들에게 "고맙다"고 말하는 안티-헤이터 컨셉 — 미움이 오히려 유명세를 키웠다는 역설',
+      credit:'작곡 Sean Cook, McKay Stevens, Dyvahh · 작사 9인(Justin Tranter, Madison Love 외) · MV 연출 Cody Critcheloe · 빌리프랩·소스뮤직·HYBE UMG 3사 최초 합작(2026.06.12 발매)',
+      a:[
+        '"미워해줘서 고마워, 그 덕분에 아이코닉해졌다"는 역설적 감사',
+        '"Thank you for the comments / It\'s because of all your hate / I-I-I-I-I-I-I am iconic by mistake" 훅 라인',
+        '9인의 작곡가가 참여했고, 뮤직비디오는 세 그룹의 전작 타이틀곡("Easy", "Cherish (My Love)", "Touch")을 이스터에그로 오마주',
+        '서로 다른 3개 소속사(빌리프랩, 소스뮤직, HYBE UMG/게펜)가 유닛 결성 없이 처음으로 낸 합작 싱글이라는 업계 최초 사례',
+        '벌스에서 악플을 나열하다 코러스에서 "고맙다"로 뒤집히는 순간',
+        '벌스에서 온라인 혐오·악플 상황을 구체적으로 묘사하며 긴장 조성',
+        '코러스에서 그 미움을 감사로 뒤집는 반전 화법으로 해소',
+        '타이틀 프레이즈 "iconic by mistake"와 "I-I-I-I-I" 식 말더듬 애드리브를 훅마다 반복',
+        '평단 반응은 오히려 엇갈렸다(한 매체는 5점 만점에 2점, "부자연스럽다"는 혹평) — 곡보다 "3개 그룹의 조합"이라는 사건성이 화제를 이끔',
+        '① 부정적 반응(악플)을 소재로 역이용해 훅으로 만들기 ② 전작들을 비주얼 이스터에그로 오마주해 팬덤 다중 서비스하기 ③ "조합" 자체를 컨셉의 중심으로 세우기'
+      ]
+    },
+    {
+      id:'s1', title:'Dai Dai', artist:'Shakira ft. Burna Boy', dot:'S',
+      ranks:[['S',2],['Y',1]], mech:'글로벌 이벤트 티이인',
+      genre:['아프로비트','월드뮤직'], theme:'2026 FIFA 월드컵(캐나다·멕시코·미국) 공식 응원가 — 축구 영웅들을 호명하며 힘내라는 동기부여 앤섬',
+      credit:'작사 Shakira, Burna Boy, Alexander Castillo, Benny Adam, Jon Bellion, Ed Sheeran · 영어·스페인어·이탈리아어·프랑스어·일본어 5개 언어 · MV 연출 Hannah Lux Davis, 메시·음바페·홀란 카메오',
+      a:[
+        '축구의 전설들을 호명하며 "다 걸어라"라고 외치는 응원가',
+        '이탈리아어 속어로 "자 해봐/다 걸어라"라는 뜻의 타이틀 훅 "Dai Dai"를 외치는 구간',
+        '영어·스페인어·이탈리아어·프랑스어·일본어 5개 언어로 불리며 에드 시런·존 벨리언 등 6명이 공동 작사',
+        '펠레, 마라도나, 호날두, 메시, 살라 등 축구 전설들의 이름을 가사에 직접 호명',
+        '언어가 전환될 때마다(영어→스페인어→이탈리아어 등) 곡의 무드가 새롭게 환기되는 지점',
+        '낯선 언어 구간이 다음 섹션에 대한 기대를 만들며 긴장 조성',
+        '"Dai Dai" 훅이 모든 언어 구간을 관통하는 공통의 앵커로 작동해 해소',
+        '"Dai Dai" 훅을 각 언어 파트 전환마다 반복 배치해 응집력 유지',
+        '두 아티스트의 원래 장르(라틴팝 vs 아프로비트)가 아니라 월드컵이라는 제3의 이벤트가 곡을 하나로 묶는 프레임이 됨',
+        '① 다국어 훅으로 글로벌 이벤트에 맞는 보편성 만들기 ② 실존 아이콘을 직접 호명해 정서적 앵커 만들기 ③ 하나의 훅 구절로 여러 언어 파트를 접착하기'
+      ]
+    },
+    {
+      id:'s2', title:'갑자기 (Suddenly)', artist:'I.O.I', dot:'M',
+      ranks:[['M',1]], mech:'국내 컴백 사이클',
+      genre:['신스팝'], theme:'10년 만의 재회에서 예고 없이 밀려오는 그리움 — 매체마다 향수 또는 미련의 이별정서로 해석이 갈림',
+      credit:'3rd 미니앨범 「I.O.I: LOOP」 타이틀곡(2026.05.19) · 작사 참여 전소미 · 11명 중 9명 재결합(강미나·저우제치옹 불참) · 데뷔 10주년(5.4) 프리릴리즈 「Goodbye With A Smile」 선공개',
+      a:[
+        '잊었다고 생각했는데 갑자기 다시 밀려오는 그리움',
+        '"잠들려 했지만 갑자기 네 생각에 빠진다" 벌스에서 "감정이 별처럼 쏟아진다"는 후렴으로 넘어가는 구간',
+        '원년 멤버인 전소미가 직접 가사 작업에 참여해 재결합 서사를 스스로 언어화',
+        '데뷔 정확히 10주년(5월 4일)에 프리릴리즈 트랙을 먼저 공개하고 타이틀곡을 뒤이어 낸 캠페인 구조 자체가 "오랜만"이라는 감정을 마케팅으로 확장',
+        '브릿지 "아무리 애써도… 잊으려 할 때마다 추억이 다시 돌아온다"는 대목',
+        '벌스에서 "잠들려 했지만" 식으로 감정을 억누르려는 시도를 묘사',
+        '코러스에서 그 감정을 억누르지 못하고 그리움으로 가득 찬다고 인정하며 해소',
+        '"갑자기"라는 제목 단어를 코러스마다 반복 배치',
+        '11명 중 9명만 재결합했음에도 "완전체 재결합"으로 소비됐다 — 완벽하지 않은 재회가 오히려 그리움의 서사를 강화',
+        '① 발매 캠페인 타이밍(정확히 10주년 당일)을 가사 정서와 맞추기 ② 원년 멤버가 직접 가사를 쓰게 해 서사의 진정성 확보 ③ 불완전한 재결합도 "그리움"으로 포장해 서사화하기'
+      ]
+    },
+    {
+      id:'s3', title:'REDRED', artist:'CORTIS', dot:'M',
+      ranks:[['M',2],['Y',21]], mech:'신인 자기서사 콘셉트',
+      genre:['K-pop','힙합 팝'], theme:'"레드"(순응·눈치보기)를 멈추고 "그린"(진짜 나)으로 넘어가자는 색깔 은유',
+      credit:'BigHit Music 3번째 그룹(BTS·TXT 다음, 2025.08.18 데뷔) · 2nd 미니앨범 「GREENGREEN」 프리릴리즈 타이틀곡(2026.04.20) · 작사 멤버 전원 참여 · 프로듀싱 Supreme Boi, Hiss Noise 외 · 데뷔 EP 빌보드200 15위(K팝 그룹 데뷔 앨범 역대 2위)',
+      a:[
+        '"레드(순응)를 멈추고 그린(진짜 나)으로 넘어가자"는 색깔 은유',
+        '후렴 "Being Easily Swayed (That\'s Red, Red)… Jump Over The Fence, Green, Green"에서 레드를 나열하다 그린으로 전환되는 순간',
+        '레드/그린이라는 두 색을 반복 나열해 행동 하나하나(눈치보기, 남 신경쓰기, 쿨한 척하기)를 "그건 레드야"로 낙인찍는 구조',
+        '색 이름 자체가 후렴 훅이 되어 "레드"·"그린" 단 두 음절만으로 강한 리듬감을 만듦',
+        '"Jump Over The Fence"에서 레드 나열을 멈추고 그린으로 넘어가는 도약의 순간',
+        '레드로 분류되는 행동들("눈치보기", "쿨한 척하기")을 후렴 내내 나열하며 긴장 조성',
+        '"그린"이라는 단어로 도약하며 "팀에 와서 섞여봐"라는 초대로 마무리하며 해소',
+        '"That\'s Red, Red" 프레이즈를 각 행 끝마다 반복해 리스트를 리듬화',
+        '멤버 전원이 직접 작사에 참여했고 리더 Martin이 BTS RM을 롤모델 삼아 조언을 받았다고 밝혔지만, 실제 프로듀싱 크레딧은 Supreme Boi 등 별도 프로듀서 — "RM이 곡을 만들었다"는 식으로 도는 정보는 부정확함',
+        '① 추상적 감정을 색깔 두 개로 단순화해 대비 훅 만들기 ② 행동 리스트를 나열하며 같은 낙인 문구를 반복해 리듬 쌓기 ③ 후렴 끝을 "초대"로 마무리해 청자를 참여시키기'
+      ]
+    }
+  ];
+
+  var listCards = document.getElementById('listCards');
+  var detailContainer = document.getElementById('detailContainer');
+
+  songs.forEach(function(s){
+    var ranksHtml = s.ranks.map(function(r){
+      return '<span class="rank-badge" style="background:'+COLORS[r[0]]+'">'+CHARTNAME[r[0]]+' '+r[1]+'위</span>';
+    }).join('');
+    var a = document.createElement('a');
+    a.className = 'list-card';
+    a.href = '#' + s.id;
+    a.style.setProperty('--card-accent', COLORS[s.dot]);
+    a.innerHTML =
+      '<div class="lc-head">' +
+        '<div><div class="lc-title">'+s.title+'</div><div class="lc-artist">'+s.artist+'</div></div>' +
+        '<svg class="chevron-right" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      '</div>' +
+      '<div class="rank-row">'+ranksHtml+'</div>' +
+      '<div class="teaser"><b>'+s.mech+'</b> · '+s.a[0]+'</div>';
+    listCards.appendChild(a);
+
+    var genreHtml = s.genre.map(function(g){ return '<span class="tagpill">'+g+'</span>'; }).join('');
+    var qaHtml = s.a.map(function(ans, i){
+      return '<div class="qa-item"><div class="q"><span class="qn">'+(i+1)+'</span>'+QLABELS[i]+'</div><div class="ans">'+ans+'</div></div>';
+    }).join('');
+    var detail = document.createElement('div');
+    detail.className = 'view';
+    detail.id = 'view-' + s.id;
+    detail.style.setProperty('--card-accent', COLORS[s.dot]);
+    detail.innerHTML =
+      '<div class="backbar"><a class="back-btn" href="#"><svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>목록으로</a></div>' +
+      '<div class="d-head">' +
+        '<div class="d-title">'+s.title+'</div>' +
+        '<div class="d-artist">'+s.artist+'</div>' +
+        '<div class="genre-row">'+genreHtml+'</div>' +
+      '</div>' +
+      '<div class="theme-line"><b>주제</b>'+s.theme+'</div>' +
+      '<div class="credit-line">🎼 '+s.credit+'</div>' +
+      qaHtml;
+    detailContainer.appendChild(detail);
+  });
+
+  function showView(hash){
+    var id = (hash && hash !== '#') ? 'view-' + hash.slice(1) : null;
+    var target = id && document.getElementById(id);
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    if(target){ target.classList.add('active'); }
+    else { document.getElementById('view-list').classList.add('active'); }
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', function(){ showView(location.hash); });
+  showView(location.hash);
+})();
+</script>

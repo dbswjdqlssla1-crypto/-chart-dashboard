@@ -1,0 +1,1074 @@
+<title>4대 음악 차트 교차분석 · 2026.07</title>
+<style>
+  :root{
+    --bg:#12141a;
+    --bg-elevated:#1b1e27;
+    --bg-card:#20232e;
+    --text:#ece7dc;
+    --text-dim:#9a9fb3;
+    --text-faint:#6b6f82;
+    --line:rgba(255,255,255,0.09);
+    --line-strong:rgba(255,255,255,0.16);
+    --accent:#e8b23d;
+    --accent-soft:rgba(232,178,61,0.14);
+    --accent-text:#1a1508;
+    --c-spotify:#4fae6a;
+    --c-youtube:#e2564c;
+    --c-billboard:#6a97e0;
+    --c-melon:#c3dc4f;
+    --shadow: 0 20px 50px -25px rgba(0,0,0,0.6);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4efe4;
+      --bg-elevated:#ffffff;
+      --bg-card:#fffdf8;
+      --text:#201d16;
+      --text-dim:#5c5646;
+      --text-faint:#8b8573;
+      --line:rgba(32,29,22,0.12);
+      --line-strong:rgba(32,29,22,0.22);
+      --accent:#a8710a;
+      --accent-soft:rgba(168,113,10,0.12);
+      --accent-text:#fff9ec;
+      --c-spotify:#2f8a53;
+      --c-youtube:#c8392f;
+      --c-billboard:#3f6bc4;
+      --c-melon:#6f8f1c;
+      --shadow: 0 20px 50px -30px rgba(32,29,22,0.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#12141a; --bg-elevated:#1b1e27; --bg-card:#20232e;
+    --text:#ece7dc; --text-dim:#9a9fb3; --text-faint:#6b6f82;
+    --line:rgba(255,255,255,0.09); --line-strong:rgba(255,255,255,0.16);
+    --accent:#e8b23d; --accent-soft:rgba(232,178,61,0.14); --accent-text:#1a1508;
+    --c-spotify:#4fae6a; --c-youtube:#e2564c; --c-billboard:#6a97e0; --c-melon:#c3dc4f;
+    --shadow: 0 20px 50px -25px rgba(0,0,0,0.6);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4efe4; --bg-elevated:#ffffff; --bg-card:#fffdf8;
+    --text:#201d16; --text-dim:#5c5646; --text-faint:#8b8573;
+    --line:rgba(32,29,22,0.12); --line-strong:rgba(32,29,22,0.22);
+    --accent:#a8710a; --accent-soft:rgba(168,113,10,0.12); --accent-text:#fff9ec;
+    --c-spotify:#2f8a53; --c-youtube:#c8392f; --c-billboard:#3f6bc4; --c-melon:#6f8f1c;
+    --shadow: 0 20px 50px -30px rgba(32,29,22,0.25);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo","Pretendard",sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  .page{max-width:1180px;margin:0 auto;padding:0 24px 96px;}
+
+  /* ---------- Masthead ---------- */
+  .masthead{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  h1.title{
+    font-size:clamp(32px,4.6vw,54px);
+    line-height:1.08;
+    letter-spacing:-0.02em;
+    margin:18px 0 20px;
+    font-weight:800;
+    text-wrap:balance;
+    max-width:16ch;
+  }
+  .subhead{
+    font-size:17px;
+    color:var(--text-dim);
+    max-width:62ch;
+    text-wrap:pretty;
+  }
+  .subhead b{color:var(--text);font-weight:650;}
+
+  /* ---------- Stat strip ---------- */
+  .stats-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    margin:40px 0 64px;
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .stat{
+    background:var(--bg-elevated);
+    padding:24px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .stat .num{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:30px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--accent);
+  }
+  .stat .label{font-size:13.5px;font-weight:650;color:var(--text);}
+  .stat .desc{font-size:12.5px;color:var(--text-faint);line-height:1.5;}
+
+  /* ---------- Section shell ---------- */
+  section{margin:88px 0;}
+  .section-head{margin-bottom:28px;max-width:70ch;}
+  .section-eyebrow{
+    font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--text-faint);font-weight:700;margin-bottom:8px;
+  }
+  h2.section-title{
+    font-size:clamp(23px,2.6vw,30px);
+    letter-spacing:-0.01em;
+    font-weight:750;
+    margin:0 0 10px;
+    text-wrap:balance;
+  }
+  .section-desc{color:var(--text-dim);font-size:15px;max-width:62ch;}
+
+  /* ---------- Chart wall ---------- */
+  .chart-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+  }
+  .chart-panel{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow);
+  }
+  .chart-panel-head{
+    padding:18px 18px 14px;
+    border-bottom:1px solid var(--line);
+    border-top:3px solid var(--c);
+  }
+  .chart-panel-head .name{font-size:16px;font-weight:750;letter-spacing:-0.01em;}
+  .chart-panel-head .date{font-size:11px;color:var(--text-faint);margin-top:4px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;}
+  .chart-list{list-style:none;margin:0;padding:8px 8px 14px;max-height:560px;overflow-y:auto;}
+  .chart-list li{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:7px 10px;
+    border-radius:7px;
+  }
+  .chart-list li:hover{background:var(--bg-card);}
+  .chart-list .rk{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:12px;
+    color:var(--text-faint);
+    width:20px;
+    flex:none;
+    text-align:right;
+  }
+  .chart-list .meta{min-width:0;flex:1;}
+  .chart-list .t{font-size:13px;font-weight:600;line-height:1.35;overflow-wrap:anywhere;}
+  .chart-list .a{font-size:11.5px;color:var(--text-faint);overflow-wrap:anywhere;}
+  .xchip{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle;}
+  .xdot{width:6px;height:6px;border-radius:50%;flex:none;}
+  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--text-faint);}
+  .chart-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .chart-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+  /* ---------- Compare (commonality/difference) ---------- */
+  .compare-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  .compare-col{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 26px 8px;
+  }
+  .compare-col h3{
+    font-size:15px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin:0 0 18px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .compare-col.common h3{color:var(--c-spotify);}
+  .compare-col.diff h3{color:var(--c-youtube);}
+  .compare-item{
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .compare-item:first-of-type{border-top:none;}
+  .compare-item .h{font-size:14.5px;font-weight:650;margin-bottom:5px;}
+  .compare-item .b{font-size:13.5px;color:var(--text-dim);line-height:1.6;}
+
+  /* ---------- Trends ---------- */
+  .trend-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  .trend-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .trend-card .tag{
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+    font-size:11px;letter-spacing:0.05em;
+    color:var(--accent);
+    background:var(--accent-soft);
+    display:inline-flex;
+    padding:3px 9px;
+    border-radius:100px;
+    width:fit-content;
+  }
+  .trend-card h4{font-size:16px;margin:2px 0 0;font-weight:700;letter-spacing:-0.005em;}
+  .trend-card p{font-size:13.5px;color:var(--text-dim);margin:0;}
+  .trend-card .evidence{font-size:12px;color:var(--text-faint);border-top:1px dashed var(--line-strong);padding-top:10px;margin-top:4px;}
+
+  /* ---------- Why it sells ---------- */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}
+  .filter-chip{
+    font-size:12.5px;font-weight:600;
+    padding:7px 14px;
+    border-radius:100px;
+    border:1px solid var(--line-strong);
+    background:var(--bg-elevated);
+    color:var(--text-dim);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-chip:hover{border-color:var(--accent);color:var(--text);}
+  .filter-chip.active{background:var(--accent);border-color:var(--accent);color:var(--accent-text);}
+  .mech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .mech-card{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px;
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .mech-card.hidden{display:none;}
+  .mech-card .mh{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .mech-card .icon{
+    width:34px;height:34px;border-radius:9px;
+    background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;flex:none;
+  }
+  .mech-card h4{font-size:16.5px;margin:0;font-weight:750;letter-spacing:-0.01em;}
+  .mech-card .why{font-size:13.5px;color:var(--text-dim);margin:10px 0 16px;line-height:1.65;}
+  .song-line{
+    display:flex;justify-content:space-between;gap:12px;
+    padding:9px 0;
+    border-top:1px solid var(--line);
+    font-size:13px;
+  }
+  .song-line:first-of-type{border-top:none;}
+  .song-line .s-name{font-weight:650;}
+  .song-line .s-artist{color:var(--text-faint);font-weight:400;}
+  .song-line .s-charts{display:flex;gap:4px;flex:none;align-self:center;}
+
+  /* ---------- Song anatomy ---------- */
+  .anatomy-note{font-size:12.5px;color:var(--text-faint);margin-top:10px;line-height:1.6;}
+  .source-list{
+    margin-top:24px;
+    padding-top:16px;
+    border-top:1px dashed var(--line-strong);
+    font-size:11.5px;
+    color:var(--text-faint);
+    line-height:1.8;
+  }
+  .source-list b{color:var(--text-dim);font-weight:700;margin-right:6px;}
+  .credit-line{font-size:12px;color:var(--text-faint);margin:-14px 0 22px;line-height:1.6;}
+  .anatomy-layout{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:18px;
+    align-items:start;
+    margin-top:26px;
+  }
+  .anatomy-list{
+    display:flex;flex-direction:column;gap:6px;
+    position:sticky; top:16px;
+  }
+  .anatomy-item{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 13px;
+    border-radius:10px;
+    border:1px solid transparent;
+    background:var(--bg-elevated);
+    cursor:pointer;
+    text-align:left;
+    width:100%;
+    font-family:inherit;
+    color:var(--text);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .anatomy-item:hover{border-color:var(--line-strong);}
+  .anatomy-item.active{background:var(--accent-soft);border-color:var(--accent);}
+  .anatomy-item .dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--dot);}
+  .anatomy-item .meta{min-width:0;}
+  .anatomy-item .t{font-size:13px;font-weight:650;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .anatomy-item .a{font-size:11.5px;color:var(--text-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  .anatomy-detail{
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:30px 32px;
+    box-shadow:var(--shadow);
+  }
+  .anatomy-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:20px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px; margin-bottom:22px;
+  }
+  .anatomy-head h3{font-size:24px;margin:0 0 4px;letter-spacing:-0.01em;font-weight:800;}
+  .anatomy-head .by{font-size:14px;color:var(--text-dim);}
+  .genre-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .tagpill{
+    font-size:11.5px;font-weight:650;
+    padding:5px 11px;border-radius:100px;
+    border:1px solid var(--line-strong);
+    color:var(--text-dim);
+    white-space:nowrap;
+  }
+  .theme-line{
+    font-size:14px;
+    color:var(--text);
+    background:var(--bg-card);
+    border-left:3px solid var(--dot);
+    padding:10px 16px;
+    border-radius:0 8px 8px 0;
+    margin-bottom:24px;
+  }
+  .theme-line b{font-weight:750;color:var(--text-faint);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
+  .qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;}
+  .qa-item{padding:16px 0;border-top:1px solid var(--line);}
+  .qa-item:nth-of-type(1),.qa-item:nth-of-type(2){border-top:none;}
+  .qa-item .q{
+    font-size:11.5px;font-weight:700;letter-spacing:0.02em;
+    color:var(--accent);margin-bottom:6px;
+    display:flex;gap:7px;align-items:baseline;
+  }
+  .qa-item .q .qn{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text-faint);}
+  .qa-item .ans{font-size:13.5px;color:var(--text-dim);line-height:1.65;}
+  .qa-item.wide{grid-column:1 / -1;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:28px;
+    margin-top:96px;
+    font-size:12px;
+    color:var(--text-faint);
+    line-height:1.8;
+  }
+  footer a{color:var(--text-faint);}
+
+  @media (max-width: 980px){
+    .chart-grid{grid-template-columns:repeat(2,1fr);}
+    .compare-grid{grid-template-columns:1fr;}
+    .trend-grid{grid-template-columns:1fr 1fr;}
+    .mech-grid{grid-template-columns:1fr;}
+    .anatomy-layout{grid-template-columns:1fr;}
+    .anatomy-list{position:static;flex-direction:row;flex-wrap:wrap;}
+    .anatomy-item{width:auto;flex:1 1 220px;}
+  }
+  @media (max-width: 620px){
+    .page{padding:0 16px 72px;}
+    .masthead{padding:48px 0 32px;}
+    .stats-strip{grid-template-columns:1fr 1fr;}
+    .chart-grid{grid-template-columns:1fr;}
+    .trend-grid{grid-template-columns:1fr;}
+    .anatomy-detail{padding:22px 18px;}
+    .qa-grid{grid-template-columns:1fr;}
+    .qa-item:nth-of-type(2){border-top:1px solid var(--line);}
+  }
+</style>
+
+<div class="page">
+
+  <header class="masthead">
+    <div class="eyebrow">Global Chart Cross-Analysis · 2026.07.11 기준</div>
+    <h1 class="title">네 개의 차트,<br>서로 다른 세계</h1>
+    <p class="subhead">스포티파이 · 유튜브뮤직 · 빌보드 · 멜론 TOP 차트를 겹쳐 보면 <b>같은 곡이 왜 어떤 차트엔 있고 어떤 차트엔 없는지</b>가 보인다. 각 차트가 무엇을 측정하는지가 다르기 때문이다 — 스트리밍만 보는 차트, 미국 라디오·판매까지 섞는 차트, 국내 팬덤 사재기가 강한 차트. 그 차이에서 다음 트렌드의 힌트를 찾는다.</p>
+  </header>
+
+  <section class="stats-strip">
+    <div class="stat">
+      <div class="num">12주</div>
+      <div class="label">빌보드 1위 최장 기록</div>
+      <div class="desc">Ella Langley 'Choosin' Texas' — 2026년 최장 1위. 컨트리 장르가 미국 내수 차트를 독점 중이나 글로벌 스트리밍 차트엔 전혀 없음.</div>
+    </div>
+    <div class="stat">
+      <div class="num">30시간</div>
+      <div class="label">유튜브 글로벌 1위 등극</div>
+      <div class="desc">'ICONIC BY MISTAKE' (르세라핌×아이엘아이티×캣츠아이) — 3개 다른 소속사 아이돌 합작이 공개 후 하루 만에 정상.</div>
+    </div>
+    <div class="stat">
+      <div class="num">4곡</div>
+      <div class="label">동시 카탈로그 역주행</div>
+      <div class="desc">전기영화 'Michael' 개봉 이후 마이클 잭슨 곡이 스포티파이·유튜브에 동시 재진입. 빌보드·멜론엔 흔적 없음.</div>
+    </div>
+    <div class="stat">
+      <div class="num">27/30</div>
+      <div class="label">멜론 TOP30 국내 발매 비중</div>
+      <div class="desc">글로벌 3개 차트와 곡이 거의 겹치지 않는 폐쇄 생태계 — 컴백 사이클과 팬덤 스트리밍이 순위를 결정.</div>
+    </div>
+  </section>
+
+  <section id="charts">
+    <div class="section-head">
+      <div class="section-eyebrow">01 · The Lists</div>
+      <h2 class="section-title">차트별 TOP 리스트</h2>
+      <p class="section-desc">점(●)이 붙은 곡은 다른 차트에도 동시에 올라 있는 곡. 색은 어느 차트인지를 가리킨다.</p>
+    </div>
+    <div class="chart-grid" id="chartGrid"></div>
+    <div class="chart-legend">
+      <span><i style="background:var(--c-spotify)"></i>Spotify Global Top 50</span>
+      <span><i style="background:var(--c-youtube)"></i>YouTube Music Global</span>
+      <span><i style="background:var(--c-billboard)"></i>Billboard Hot 100</span>
+      <span><i style="background:var(--c-melon)"></i>Melon Top 100</span>
+    </div>
+  </section>
+
+  <section id="compare">
+    <div class="section-head">
+      <div class="section-eyebrow">02 · Read Across</div>
+      <h2 class="section-title">공통점과 차이점</h2>
+      <p class="section-desc">네 차트를 나란히 놓았을 때 반복되는 패턴과, 한 차트에서만 보이는 이상 신호.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-col common">
+        <h3>공통점</h3>
+        <div class="compare-item">
+          <div class="h">K팝이 더 이상 멜론 전용이 아니다</div>
+          <div class="b">JENNIE가 피처링한 Tame Impala 'Dracula'(스포티파이·빌보드·유튜브 동시 차팅), 3개 그룹 합작 'ICONIC BY MISTAKE'(스포티파이·유튜브), OST 앙상블 'Golden'(스포티파이·유튜브·멜론 동시)까지 — K팝발 트랙이 글로벌 3개 차트 전부에 침투했다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">한 앨범, 여러 트랙 동시 차팅</div>
+          <div class="b">Olivia Rodrigo는 스포티파이·빌보드에 동시에 3~4곡, Ella Langley는 빌보드 top6에 3곡을 걸었다. 싱글 하나로 승부하기보다 앨범 전체를 차트에 밀어넣는 전략이 두 차트에서 동일하게 관측된다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">카탈로그 역주행은 스트리밍 중심 차트에서만</div>
+          <div class="b">마이클 잭슨 곡들이 스포티파이·유튜브에서 동시에 순위권 진입 — 둘 다 '스트리밍 재생 수'를 direct하게 반영하는 차트라는 공통점이 신호를 증폭시켰다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">기존 슈퍼스타는 항상 어딘가에 있다</div>
+          <div class="b">Ariana Grande, Bruno Mars, Drake, Taylor Swift는 바이럴 모멘트 없이도 2~3개 차트에 걸쳐 꾸준히 등장 — 팬덤 규모 자체가 알고리즘 노출을 대체한다.</div>
+        </div>
+      </div>
+      <div class="compare-col diff">
+        <h3>차이점</h3>
+        <div class="compare-item">
+          <div class="h">빌보드만 미국 로컬 장르를 증폭한다</div>
+          <div class="b">컨트리 곡이 빌보드 top3를 싹쓸이하고 12주째 1위를 지키는데, 같은 기간 스포티파이·유튜브·멜론 글로벌 리스트엔 컨트리가 단 한 곡도 없다. 라디오·판매를 섞는 빌보드 방식론이 순수 스트리밍과 다른 세계를 보여준다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">멜론은 사실상 국내 폐쇄망</div>
+          <div class="b">TOP30 중 27곡이 국내 컴백 발매곡(아이오아이 10주년, 코르티스 데뷔, 에스파, 아이유·에이핑크급 컴백 러시). 유일한 접점은 'Golden' 한 곡뿐 — 다른 세 차트와의 상관관계가 거의 없다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">유튜브만 로컬 언어 바이럴을 실시간으로 보여준다</div>
+          <div class="b">펀자비·볼리우드 5곡, 레게톤/멕시칸 리저널 3곡, 터키·인도네시아·하리아나비 곡까지 — 스포티파이·빌보드·멜론에는 전혀 없는 신흥 시장의 바이럴이 유튜브에서만 먼저 감지된다.</div>
+        </div>
+        <div class="compare-item">
+          <div class="h">같은 사건, 다른 반응 속도</div>
+          <div class="b">마이클 잭슨 카탈로그 서지는 스포티파이·유튜브에 즉시 반영됐지만 빌보드·멜론엔 아직 나타나지 않았다 — 다차원 지표(빌보드)와 국내 발매 중심(멜론) 차트는 순수 스트리밍 신호에 더 느리게, 혹은 아예 반응하지 않는다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trends">
+    <div class="section-head">
+      <div class="section-eyebrow">03 · What's Next</div>
+      <h2 class="section-title">다음 트렌드 예측</h2>
+      <p class="section-desc">지금 네 차트에 동시다발적으로 나타난 신호들을 근거로 한 예측.</p>
+    </div>
+    <div class="trend-grid">
+      <div class="trend-card">
+        <span class="tag">IP 카탈로그</span>
+        <h4>전기영화·애니 OST가 '뉴 릴리즈'보다 세진다</h4>
+        <p>Michael Jackson 전기영화, KPop Demon Hunters OST 사례처럼 미디어 IP 하나가 수십 년 묵은 곡을 신곡보다 높은 순위로 되돌린다. 앞으로 아티스트 전기영화·애니메이션 뮤지컬 발표가 곧 카탈로그 스트리밍 예약이 될 것.</p>
+        <div class="evidence">근거: MJ 카탈로그 4곡 동시 진입, Golden의 1년+ 장기 차팅</div>
+      </div>
+      <div class="trend-card">
+        <span class="tag">K팝 합종연횡</span>
+        <h4>소속사 간 '깜짝 합작'이 컴백의 새 공식이 된다</h4>
+        <p>서로 다른 3개 기획사 그룹이 뭉친 'ICONIC BY MISTAKE'가 단독 컴백보다 압도적으로 빠르게 1위를 찍었다. 단일 그룹 컴백보다 화제성이 큰 크로스 레이블 콜라보가 늘어날 가능성이 높다.</p>
+        <div class="evidence">근거: 공개 30시간 만에 유튜브 글로벌·K팝 차트 동시 석권</div>
+      </div>
+      <div class="trend-card">
+        <span class="tag">선행 지표</span>
+        <h4>유튜브의 로컬 바이럴이 내일의 글로벌 히트다</h4>
+        <p>지금 유튜브에만 있는 펀자비·라틴 리저널 트랙은 과거 아프로비트·레게톤이 그랬듯 6~12개월 뒤 스포티파이 글로벌·빌보드에 진입할 후보군이다. 유튜브 20~30위권을 먼저 보면 다음 크로스오버를 예측할 수 있다.</p>
+        <div class="evidence">근거: 유튜브 전용 지역 장르 클러스터 5개국 이상 동시 관측</div>
+      </div>
+      <div class="trend-card">
+        <span class="tag">차트 탈동조화</span>
+        <h4>빌보드와 글로벌 스트리밍의 간극이 더 벌어진다</h4>
+        <p>미국 내수 장르(컨트리)가 빌보드를 12주째 지배하는 동안 글로벌 차트엔 자취가 없다. 다지표 차트(빌보드)와 순수 스트리밍 차트(스포티파이)가 서로 다른 '1위'를 보여주는 현상이 구조적으로 고착될 것.</p>
+        <div class="evidence">근거: Choosin' Texas 12주 연속 1위, 글로벌 3개 차트 미진입</div>
+      </div>
+      <div class="trend-card">
+        <span class="tag">앨범 물량공세</span>
+        <h4>싱글 하나가 아니라 트랙 3~4개로 차트를 점거한다</h4>
+        <p>Olivia Rodrigo, Ella Langley 모두 한 번에 여러 곡을 동시 차팅시켰다. 발매 전략 자체가 '리드 싱글 하나'에서 '앨범 전곡 동시 공개로 차트 점유율 극대화'로 옮겨가는 흐름이 이어질 것.</p>
+        <div class="evidence">근거: Rodrigo 스포티파이 4곡·빌보드 3곡, Langley 빌보드 top6 중 3곡</div>
+      </div>
+      <div class="trend-card">
+        <span class="tag">국내 생태계</span>
+        <h4>멜론은 당분간 계속 '컴백 캘린더'로 움직인다</h4>
+        <p>글로벌 크로스오버가 터지지 않는 한 멜론 상위권은 국내 컴백 일정과 팬덤 스트리밍이 결정한다. 'Golden'처럼 K팝 스타일 OST·글로벌 프로젝트가 아니고서는 국내외 차트가 계속 따로 움직일 것.</p>
+        <div class="evidence">근거: 멜론 TOP30 중 27곡이 국내 발매, 글로벌 겹침은 1곡뿐</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="section-head">
+      <div class="section-eyebrow">04 · The Mechanics</div>
+      <h2 class="section-title">이 곡들은 왜 팔리는가</h2>
+      <p class="section-desc">개별 곡의 완성도보다 '어떤 힘이 순위를 밀어올렸는지'로 묶었다. 태그를 눌러 필터링.</p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="mech-grid" id="mechGrid"></div>
+  </section>
+
+  <section id="anatomy">
+    <div class="section-head">
+      <div class="section-eyebrow">05 · Song Anatomy</div>
+      <h2 class="section-title">곡 해부 — 무엇이 곡을 곡답게 만드는가</h2>
+      <p class="section-desc">장르·주제부터 훅이 만들어지고 풀리는 방식까지, 히트 메커니즘을 대표하는 곡 8개를 골라 같은 10가지 질문으로 뜯어봤다. 왼쪽에서 곡을 고르면 오른쪽에 답이 나온다.</p>
+      <p class="anatomy-note">※ 오디오를 직접 들을 수는 없어 실제 가사 원문·작곡가/프로듀서 인터뷰·음악 매체 리뷰(위키피디아, 빌보드, 포브스, 버라이어티, 할러 등)를 리서치해 사실에 기반해 작성했습니다. 일부 항목(예: 특정 제작 비화, 가사 해석)은 출처 간 확인이 엇갈려 곡 설명에 별도로 표시했습니다.</p>
+    </div>
+    <div class="anatomy-layout">
+      <div class="anatomy-list" id="anatomyList"></div>
+      <div class="anatomy-detail" id="anatomyDetail"></div>
+    </div>
+    <div class="source-list">
+      <b>출처</b>
+      Wikipedia(Billie Jean · Golden(Huntrix song) · Back to Friends · Hate That I Made You Love Me · Iconic by Mistake · Choosin' Texas · Dai Dai) ·
+      MusicRadar(Billie Jean 제작기) · Netflix Tudum &amp; Variety(Golden 오럴 히스토리) · Forbes(Ariana Grande, LE SSERAFIM×ILLIT×KATSEYE) ·
+      Billboard(Iconic by Mistake, Choosin' Texas 차트 기록) · Soompi &amp; allkpop &amp; ColorCodedLyrics(I.O.I 갑자기) · Holler(Choosin' Texas 가사 해설) · FIFA.com(Dai Dai)
+    </div>
+  </section>
+
+  <footer>
+    데이터 출처: kworb.net(Spotify Global Weekly/Daily), Melon 차트, Billboard.com Hot 100 / OfficialCharts.com, Soundcharts.com YouTube Global, allkpop, Wikipedia. 스포티파이 기준일 2026.06.29–07.05(주간), 유튜브 기준일 2026.06.29–07.11, 빌보드·멜론 2026.07.11 조회. 빌보드·유튜뮤직은 상위 20~30위, 멜론은 상위 30위까지만 수집해 분석했으며 순위는 주 단위로 변동될 수 있음.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var COLORS = {S:'var(--c-spotify)', Y:'var(--c-youtube)', B:'var(--c-billboard)', M:'var(--c-melon)'};
+  var NAMES = {S:'Spotify', Y:'YouTube Music', B:'Billboard Hot 100', M:'Melon Top 100'};
+
+  var charts = [
+    {
+      code:'S', name:'Spotify Global Top 50', date:'주간 · 2026.06.29–07.05', color:'var(--c-spotify)',
+      items:[
+        ['Billie Jean','Michael Jackson',['Y']],
+        ['Dai Dai','Shakira ft. Burna Boy',['Y']],
+        ['Beauty And A Beat','Justin Bieber ft. Nicki Minaj',['Y']],
+        ['hate that i made you love me','Ariana Grande',['Y','B']],
+        ['stupid song','Olivia Rodrigo',['B']],
+        ['SWIM','BTS',[]],
+        ['Babydoll','Dominic Fike',['Y']],
+        ['Earrings','Malcolm Todd',[]],
+        ['the cure','Olivia Rodrigo',['B']],
+        ['drop dead','Olivia Rodrigo',['B']],
+        ['Beat It','Michael Jackson',['Y']],
+        ['The One That Got Away','Katy Perry',['Y']],
+        ['Self Aware','Temper City',[]],
+        ['back to friends','sombr',[]],
+        ['honeybee','Olivia Rodrigo',[]],
+        ["Choosin' Texas",'Ella Langley',['B']],
+        ['Man I Need','Olivia Dean',['B']],
+        ['End of Beginning','Djo',[]],
+        ['Iris','The Goo Goo Dolls',[]],
+        ['DtMF','Bad Bunny',[]],
+        ['Janice STFU','Drake',['B']],
+        ['The Fate of Ophelia','Taylor Swift',[]],
+        ['ICONIC BY MISTAKE','LE SSERAFIM, ILLIT & KATSEYE',['Y']],
+        ['Die With A Smile','Lady Gaga ft. Bruno Mars',[]],
+        ['Chicago','Michael Jackson',[]],
+        ['Risk It All','Bruno Mars',['B']],
+        ['Love Me Not','Ravyn Lenae',[]],
+        ['Lush Life','Zara Larsson',[]],
+        ['Dracula (JENNIE Remix)','Tame Impala ft. JENNIE',['B','Y']],
+        ['Raindance','Dave ft. Tems',[]],
+        ['Locked out of Heaven','Bruno Mars',[]],
+        ['So Easy (To Fall In Love)','Olivia Dean',['B']],
+        ['BAILE INoLVIDABLE','Bad Bunny',[]],
+        ['Mr. Brightside','The Killers',[]],
+        ['On The Floor','Jennifer Lopez ft. Pitbull',[]],
+        ['BIRDS OF A FEATHER','Billie Eilish',[]],
+        ['NUEVAYoL','Bad Bunny',[]],
+        ['Sesi Potret','eńau ft. Ari Lesmana',['Y']],
+        ['Sailor Song','Gigi Perez',[]],
+        ['Cinderella','Mac Miller ft. Ty Dolla $ign',[]],
+        ['Life Goes On','Oliver Tree',['Y']],
+        ['I Knew It, I Knew You','Taylor Swift',['B']],
+        ['Sweater Weather','The Neighbourhood',[]],
+        ['One Dance','Drake ft. Wizkid & Kyla',[]],
+        ['Ordinary','Alex Warren',[]],
+        ['Every Breath You Take','The Police',[]],
+        ["Don't Stop 'Til You Get Enough",'Michael Jackson',[]],
+        ['Treat You Better','Shawn Mendes',[]],
+        ['WHERE IS MY HUSBAND!','RAYE',[]],
+        ['Golden','HUNTR/X ft. EJae, AUDREY NUNA & REI AMI',['Y','M']],
+      ]
+    },
+    {
+      code:'Y', name:'YouTube Music Global', date:'주간 · 2026.06.29–07.11 · Soundcharts', color:'var(--c-youtube)',
+      items:[
+        ['Dai Dai','Shakira & Burna Boy',['S']],
+        ['Life Goes On','Oliver Tree',['S']],
+        ['Miss You','Oliver Tree & Robin Schulz',[]],
+        ['Golden','HUNTR/X, EJAE, AUDREY NUNA, REI AMI',['S','M']],
+        ['Waka Waka (This Time For Africa) [Live]','Shakira',[]],
+        ['ICONIC BY MISTAKE','LE SSERAFIM, ILLIT & KATSEYE',['S']],
+        ['Shararat','Jasmine Sandlas, Madhubanti Bagchi & Shashwat Sachdev',[]],
+        ['Billie Jean (Single Version)','Michael Jackson',['S']],
+        ['Gehra Hua','Shashwat Sachdev, Arijit Singh, Irshad Kamil, Armaan Khan',[]],
+        ['Beat It','Michael Jackson',['S']],
+        ['Bairan','Banjaare',[]],
+        ["It's Me",'ILLIT',['M']],
+        ['Jithe Mera Ghar','Jasmine Sandlas, Satinder Sartaaj & Shashwat Sachdev',[]],
+        ['NO BATIDÃO','SLXUGHTER & ZXKAI',[]],
+        ['Beauty and a Beat','Nicki Minaj & Justin Bieber',['S']],
+        ['Todo Lo Fue','Lenin Ramírez',[]],
+        ['Sheesha','Swara Verma & Mitta Ror',[]],
+        ['Cuando No Era Cantante','El Bogueto & Yung Beef',[]],
+        ['hate that i made you love me','Ariana Grande',['S','B']],
+        ['Dracula (JENNIE Remix)','Tame Impala & JENNIE',['S','B']],
+        ['REDRED','CORTIS',['M']],
+        ['Smooth Criminal','Michael Jackson',[]],
+        ['Thriller Megamix','Michael Jackson',[]],
+        ['The One That Got Away','Katy Perry',['S']],
+        ['Babydoll','Dominic Fike',['S']],
+        ['Headlights','Alok, Alan Walker & KIDDO',[]],
+        ['Hileli','manifest & Ajda Pekkan',[]],
+        ['Sesi Potret','eńau & Ari Lesmana',['S']],
+        ['Ya Borracho','Herencia De Grandes',[]],
+        ['Fortuner','Ruchika Jangid & Raj Mawar',[]],
+      ]
+    },
+    {
+      code:'B', name:'Billboard Hot 100', date:'주간 · 2026.07.11', color:'var(--c-billboard)',
+      items:[
+        ["Choosin' Texas",'Ella Langley',['S']],
+        ['I Knew It, I Knew You','Taylor Swift',['S']],
+        ['Be Her','Ella Langley',[]],
+        ['Janice STFU','Drake',['S']],
+        ['Man I Need','Olivia Dean',['S']],
+        ["I Can't Love You Anymore",'Ella Langley & Morgan Wallen',[]],
+        ['Hate That I Made You Love Me','Ariana Grande',['S','Y']],
+        ['Dracula','Tame Impala & JENNIE',['S','Y']],
+        ['Drop Dead','Olivia Rodrigo',['S']],
+        ['I Just Might','Bruno Mars',[]],
+        ['Stupid Song','Olivia Rodrigo',['S']],
+        ['So Easy (To Fall In Love)','Olivia Dean',['S']],
+        ['Boston','Stella Lefty',[]],
+        ['Risk It All','Bruno Mars',['S']],
+        ['Homewrecker','sombr',[]],
+        ['Stateside','PinkPantheress With Zara Larsson',[]],
+        ['Midnight Sun','Zara Larsson',[]],
+        ['The Cure','Olivia Rodrigo',['S']],
+        ['Spend Dat','Yung Miami',[]],
+        ['Be By You','Luke Combs',[]],
+      ]
+    },
+    {
+      code:'M', name:'Melon Top 100', date:'2026.07.11 조회 · 상위 30', color:'var(--c-melon)',
+      items:[
+        ['갑자기 (Suddenly)','I.O.I',[]],
+        ['REDRED','CORTIS',['Y']],
+        ['LOVE ATTACK','RESCENE',[]],
+        ['LEMONADE','aespa',[]],
+        ["It's Me",'ILLIT',['Y']],
+        ['소문의 낙원','AKMU',[]],
+        ['캐치 캐치','YENA',[]],
+        ['기쁨, 슬픔, 아름다운 마음','AKMU',[]],
+        ['Drowning','WOODZ',[]],
+        ['사랑하게 될 거야','한로로',[]],
+        ['RUDE!','Hearts2Hearts',[]],
+        ['0+0','한로로',[]],
+        ['Pretty Girl','RESCENE',[]],
+        ['Good Goodbye','HWASA',[]],
+        ['Heavy Serenade','NMIXX',[]],
+        ['타임캡슐','DAVICHI',[]],
+        ['404 (New Era)','KiiiKiii',[]],
+        ['만찬가','TAEYEON',[]],
+        ['BANG BANG','IVE',[]],
+        ['Popcorn','D.O.',[]],
+        ['어떻게 이별까지 사랑하겠어, 널 사랑하는 거지','AKMU',[]],
+        ['Lemon Tang','Hearts2Hearts',[]],
+        ['어제보다 슬픈 오늘','WOODY',[]],
+        ['너에게 닿기를','10CM',[]],
+        ['Blue Valentine','NMIXX',[]],
+        ['너의 모든 순간','성시경',[]],
+        ['소나기','ECLIPSE',[]],
+        ['모르시나요','조째즈',[]],
+        ['Golden','KPop Demon Hunters Cast',['S','Y']],
+        ['멸종위기사랑','이찬혁',[]],
+      ]
+    }
+  ];
+
+  var chartGrid = document.getElementById('chartGrid');
+  charts.forEach(function(c){
+    var panel = document.createElement('article');
+    panel.className = 'chart-panel';
+    panel.style.setProperty('--c', c.color);
+
+    var head = document.createElement('div');
+    head.className = 'chart-panel-head';
+    head.innerHTML = '<div class="name">'+c.name+'</div><div class="date">'+c.date+'</div>';
+    panel.appendChild(head);
+
+    var ol = document.createElement('ol');
+    ol.className = 'chart-list';
+    c.items.forEach(function(item, idx){
+      var li = document.createElement('li');
+      var dots = item[2].map(function(code){
+        return '<span class="xdot" style="background:'+COLORS[code]+'" title="'+NAMES[code]+'에도 있음"></span>';
+      }).join('');
+      li.innerHTML =
+        '<span class="rk mono">'+(idx+1)+'</span>' +
+        '<span class="meta"><span class="t">'+item[0]+(dots ? '<span class="xchip">'+dots+'</span>' : '')+'</span><span class="a">'+item[1]+'</span></span>';
+      ol.appendChild(li);
+    });
+    panel.appendChild(ol);
+    chartGrid.appendChild(panel);
+  });
+
+  var mechanisms = [
+    {
+      icon:'🎬', tag:'media', title:'미디어 IP 티이인 · 카탈로그 부활',
+      why:'수십 년 된 곡이 신곡보다 높은 순위에 오르는 이유는 새 팬덤이 아니라 영화·애니메이션이 만든 재생 트리거다. 전기영화·OST가 개봉하는 순간, 스트리밍 알고리즘은 그 아티스트의 카탈로그 전체를 다시 추천한다.',
+      songs:[
+        ['Billie Jean 외 MJ 카탈로그 4곡','Michael Jackson',['S','Y']],
+        ['Golden','HUNTR/X 외 (KPop Demon Hunters OST)',['S','Y','M']],
+        ['The One That Got Away','Katy Perry',['S','Y']],
+      ]
+    },
+    {
+      icon:'🤝', tag:'kcollab', title:'K팝 크로스오버 콜라보',
+      why:'한 그룹의 컴백보다 「서로 다른 소속사·장르가 합쳐진 조합」 자체가 뉴스가 된다. JENNIE의 서구 록밴드 피처링, 3개 기획사 합작 유닛은 각 팬덤이 동시에 스트리밍에 참여하게 만들어 초반 화력이 배가된다.',
+      songs:[
+        ['Dracula (JENNIE Remix)','Tame Impala ft. JENNIE',['S','Y','B']],
+        ['ICONIC BY MISTAKE','LE SSERAFIM × ILLIT × KATSEYE',['S','Y']],
+        ['REDRED','CORTIS (BigHit 3번째 그룹, BTS·TXT 다음)',['M','Y']],
+      ]
+    },
+    {
+      icon:'📅', tag:'comeback', title:'국내 컴백 사이클 · 팬덤 스트리밍',
+      why:'멜론 상위권은 발매 당일 팬덤의 화력전으로 결정된다. 완성도와 별개로 「몇 년 만의 컴백」이라는 서사, 초동 스트리밍 총공이 순위를 만든다 — 글로벌 차트와는 다른 게임의 규칙.',
+      songs:[
+        ['갑자기 (Suddenly)','I.O.I — 10주년 재결합, 9년 만의 신곡',['M']],
+        ['LEMONADE','aespa — 컴백 싱글',['M']],
+        ['소문의 낙원 / 기쁨, 슬픔, 아름다운 마음','AKMU — 동시 2곡 차팅',['M']],
+      ]
+    },
+    {
+      icon:'💿', tag:'flood', title:'앨범 물량공세 · 멀티 트랙 차팅',
+      why:'리드 싱글 하나에 걸지 않고 앨범 수록곡 전체를 한꺼번에 공개해 차트 상위권 여러 자리를 한 아티스트가 동시에 점거하는 전략. 순위 경쟁자를 스스로 늘리는 대신 점유율로 승부한다.',
+      songs:[
+        ['stupid song / the cure / drop dead 외','Olivia Rodrigo — 4곡 동시 차팅',['S','B']],
+        ["Choosin' Texas / Be Her / I Can't Love You Anymore",'Ella Langley — 빌보드 top6 중 3곡',['B']],
+        ['Man I Need / So Easy (To Fall In Love)','Olivia Dean',['S','B']],
+      ]
+    },
+    {
+      icon:'📱', tag:'viral', title:'틱톡·바이럴발 인디 역주행',
+      why:'대형 마케팅 없이 짧은 클립 하나가 알고리즘을 타면서 스트리밍으로 전환되는 경우. 차트 밖 신인이 진입하는 거의 유일한 경로이며, 확산 속도가 빠른 만큼 순위 유지력은 상대적으로 짧다.',
+      songs:[
+        ['back to friends / Homewrecker','sombr',['S','B']],
+        ['Earrings','Malcolm Todd',['S']],
+        ['Self Aware','Temper City',['S']],
+      ]
+    },
+    {
+      icon:'🌍', tag:'regional', title:'로컬 언어 바이럴 (유튜브 전용)',
+      why:'스포티파이·빌보드·멜론에는 잡히지 않는, 특정 언어권 내부에서만 폭발적으로 소비되는 트랙. 유튜브의 모바일·신흥국 사용자 기반이 만드는 현상으로, 과거 아프로비트·레게톤이 밟았던 길과 같은 초기 단계일 수 있다.',
+      songs:[
+        ['Shararat / Gehra Hua / Bairan 외','펀자비·볼리우드 클러스터 5곡',['Y']],
+        ['Todo Lo Fue / Cuando No Era Cantante / Ya Borracho','레지오날 멕시카노 클러스터',['Y']],
+        ['Hileli / Sesi Potret / Fortuner','터키 · 인도네시아 · 하리아나비',['Y']],
+      ]
+    },
+    {
+      icon:'⭐', tag:'star', title:'기존 스타파워',
+      why:'새로운 화제성 없이도 몇 개 차트에 걸쳐 꾸준히 등장하는 곡들. 발매 시점의 팬덤 규모와 플레이리스트 고정 노출이 알고리즘 바이럴을 대체한다 — 차트의 「베이스라인」을 유지하는 역할.',
+      songs:[
+        ['hate that i made you love me','Ariana Grande',['S','Y','B']],
+        ['Janice STFU','Drake',['S','B']],
+        ['Risk It All','Bruno Mars',['S','B']],
+      ]
+    },
+  ];
+
+  var filters = document.getElementById('filters');
+  var mechGrid = document.getElementById('mechGrid');
+  var allChip = document.createElement('button');
+  allChip.className = 'filter-chip active';
+  allChip.textContent = '전체';
+  allChip.dataset.tag = 'all';
+  filters.appendChild(allChip);
+
+  mechanisms.forEach(function(m){
+    var chip = document.createElement('button');
+    chip.className = 'filter-chip';
+    chip.textContent = m.title.split(' · ')[0];
+    chip.dataset.tag = m.tag;
+    filters.appendChild(chip);
+
+    var card = document.createElement('article');
+    card.className = 'mech-card';
+    card.dataset.tag = m.tag;
+    var songsHtml = m.songs.map(function(s){
+      var dots = s[2].map(function(code){
+        return '<span class="xdot" style="background:'+COLORS[code]+'" title="'+NAMES[code]+'"></span>';
+      }).join('');
+      return '<div class="song-line"><span><span class="s-name">'+s[0]+'</span> <span class="s-artist">— '+s[1]+'</span></span><span class="s-charts">'+dots+'</span></div>';
+    }).join('');
+    card.innerHTML =
+      '<div class="mh"><span class="icon">'+m.icon+'</span><h4>'+m.title+'</h4></div>' +
+      '<p class="why">'+m.why+'</p>' +
+      songsHtml;
+    mechGrid.appendChild(card);
+  });
+
+  filters.addEventListener('click', function(e){
+    var btn = e.target.closest('.filter-chip');
+    if(!btn) return;
+    filters.querySelectorAll('.filter-chip').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var tag = btn.dataset.tag;
+    mechGrid.querySelectorAll('.mech-card').forEach(function(card){
+      card.classList.toggle('hidden', tag !== 'all' && card.dataset.tag !== tag);
+    });
+  });
+
+  // ---------- Song anatomy ----------
+  var QLABELS = [
+    '이 곡의 한 줄 아이디어는?',
+    '가장 기억나는 5초는?',
+    '가장 독창적인 요소는?',
+    '왜 기억에 남는가?',
+    '감정이 가장 크게 변하는 순간은?',
+    '긴장은 어떻게 만드는가?',
+    '해소는 어떻게 하는가?',
+    '반복되는 패턴은?',
+    '의외의 반전은?',
+    '내 곡에 가져갈 아이디어 3개는?'
+  ];
+
+  var songs = [
+    {
+      title:'Billie Jean', artist:'Michael Jackson', dot:'S',
+      genre:['포스트디스코','R&B-팝'], theme:'억울하게 뒤집어쓴 친자 소송을 부인하는 노래 — "Billie Jean is not my lover / the kid is not my son"',
+      credit:'제작 Quincy Jones · 베이스 Louis Johnson · 드럼 Ndugu Chancler · 엔지니어 Bruce Swedien · 1983년 빌보드 핫100 7주 연속 1위',
+      a:[
+        '"그 애는 내 아들이 아니다"를 끝까지 부인하는 한 줄',
+        '드럼·하이햇·카바사에 이어 3음 신스 베이스 리프만 흐르는 29초짜리 인트로',
+        '퀸시 존스는 이 인트로를 잘라내고 싶어했지만, 잭슨이 "이게 날 춤추게 만든다"며 끝까지 고집해 살아남았다',
+        '브루스 스웨디언이 스네어와 하이햇 사이에 나무를 끼워 만든 커스텀 드럼 사운드, 믹스만 91번',
+        '루이스 존슨(브라더스 존슨)이 연주한 베이스라인이 코드 변화 없이 곡 전체를 홀로 지탱하는 지점',
+        '보컬 없이 리듬 트랙만 29초를 채우는 인트로 자체가 긴장 — 퀸시 존스조차 "너무 길다"고 판단했던 구간',
+        '후렴 "Billie Jean is not my lover"에서 처음으로 코드가 움직이며 보컬 멜로디가 열림',
+        '3음짜리 신스 베이스라인이 처음부터 끝까지 거의 변주 없이 반복되며 곡의 뼈대를 이룸',
+        '프로듀서가 들어내고 싶어했던 부분이 훗날 가장 상징적인 인트로가 됐다 — 아티스트의 고집이 옳았던 사례',
+        '① 확신이 있으면 "너무 길다"는 피드백에도 리듬 인트로를 밀어붙이기 ② 물리적 사운드 디자인(악기 배치)으로 남과 다른 질감 만들기 ③ 극소수 음으로 이루어진 훅을 끝까지 반복해 각인시키기'
+      ]
+    },
+    {
+      title:'Golden', artist:'HUNTR/X (Netflix 「KPop Demon Hunters」 OST)', dot:'Y',
+      genre:['K-pop','일렉트로팝 앤섬'], theme:'악마 사냥꾼 그룹이 봉인 의식을 위해 부르는 노래이자, 리드보컬 루미가 반은 악마라는 비밀이 드러나는 곡',
+      credit:'작사·작곡 EJAE, Mark Sonnenblick, Teddy Park 외 THEBLACKLABEL 팀 · G장조, 3옥타브 레인지 · 2026년 아카데미 주제가상 수상(최초의 K팝 스타일 곡)',
+      a:[
+        '"함께라면 우리는 빛난다"는 봉인 의식이자 정체성 고백',
+        '후렴 클라이맥스에서 3옥타브를 넘어 하이 A5를 찍는 순간 — 오페라 소프라노급 고음을 극중 장치로 사용',
+        '곡의 고음 난이도 자체가 스토리 장치 — "악마와 싸우는 봉인 노래는 어려워야 한다"는 설정을 음악으로 구현',
+        '영어 가사에 한국어 표현을 섞고 "We\'re goin\' up, up, up… gonna be golden" 훅을 반복 배치',
+        '벌스의 억눌린 긴장이 3옥타브를 오르내리다 하이 A5에서 터지는 지점',
+        '멜로디가 계속 다음 고음을 예고하며 옥타브를 오르내려 긴장을 유지',
+        'EJAE·Audrey Nuna·REI AMI 세 보컬이 하모니로 겹쳐 클라이맥스 고음을 완성하며 해소',
+        '"golden"과 "up up up" 구절을 후렴마다 반복해 각인',
+        '실존 아이돌이 아니라 애니메이션 속 가상 그룹의 노래인데 2026년 아카데미 주제가상을 수상한 최초의 K팝 스타일 곡이 됐다',
+        '① 보컬 난이도 자체를 서사적 장치로 설계하기 ② 여러 보컬의 옥타브 대비로 클라이맥스 만들기 ③ 언어를 섞어 훅의 정체성 강화하기'
+      ]
+    },
+    {
+      title:'ICONIC BY MISTAKE', artist:'LE SSERAFIM × ILLIT × KATSEYE', dot:'Y',
+      genre:['얼터너티브 팝','하이퍼팝'], theme:'악플러들에게 "고맙다"고 말하는 안티-헤이터 컨셉 — 미움이 오히려 유명세를 키웠다는 역설',
+      credit:'작곡 Sean Cook, McKay Stevens, Dyvahh · 작사 9인(Justin Tranter, Madison Love 외) · MV 연출 Cody Critcheloe · 빌리프랩·소스뮤직·HYBE UMG 3사 최초 합작',
+      a:[
+        '"미워해줘서 고마워, 그 덕분에 아이코닉해졌다"는 역설적 감사',
+        '"Thank you for the comments / It\'s because of all your hate / I-I-I-I-I-I-I am iconic by mistake" 훅 라인',
+        '9인의 작곡가가 참여했고, 뮤직비디오는 세 그룹의 전작 타이틀곡("Easy", "Cherish (My Love)", "Touch")을 이스터에그로 오마주',
+        '서로 다른 3개 소속사(빌리프랩, 소스뮤직, HYBE UMG/게펜)가 유닛 결성 없이 처음으로 낸 합작 싱글이라는 업계 최초 사례',
+        '벌스에서 악플을 나열하다 코러스에서 "고맙다"로 뒤집히는 순간',
+        '벌스에서 온라인 혐오·악플 상황을 구체적으로 묘사하며 긴장 조성',
+        '코러스에서 그 미움을 감사로 뒤집는 반전 화법으로 해소',
+        '타이틀 프레이즈 "iconic by mistake"와 "I-I-I-I-I" 식 말더듬 애드리브를 훅마다 반복',
+        '평단 반응은 오히려 엇갈렸다(한 매체는 5점 만점에 2점, "부자연스럽다"는 혹평) — 곡보다 "3개 그룹의 조합"이라는 사건성이 화제를 이끔',
+        '① 부정적 반응(악플)을 소재로 역이용해 훅으로 만들기 ② 전작들을 비주얼 이스터에그로 오마주해 팬덤 다중 서비스하기 ③ "조합" 자체를 컨셉의 중심으로 세우기'
+      ]
+    },
+    {
+      title:'갑자기 (Suddenly)', artist:'I.O.I', dot:'M',
+      genre:['신스팝'], theme:'10년 만의 재회에서 예고 없이 밀려오는 그리움 — 매체마다 향수 또는 미련의 이별정서로 해석이 갈림',
+      credit:'3rd 미니앨범 「I.O.I: LOOP」 타이틀곡(2026.05.19) · 작사 참여 전소미 · 11명 중 9명 재결합(강미나·저우제치옹 불참) · 데뷔 10주년(5.4) 프리릴리즈 「Goodbye With A Smile」 선공개',
+      a:[
+        '잊었다고 생각했는데 갑자기 다시 밀려오는 그리움',
+        '"잠들려 했지만 갑자기 네 생각에 빠진다" 벌스에서 "감정이 별처럼 쏟아진다"는 후렴으로 넘어가는 구간',
+        '원년 멤버인 전소미가 직접 가사 작업에 참여해 재결합 서사를 스스로 언어화',
+        '데뷔 정확히 10주년(5월 4일)에 프리릴리즈 트랙을 먼저 공개하고 타이틀곡을 뒤이어 낸 캠페인 구조 자체가 "오랜만"이라는 감정을 마케팅으로 확장',
+        '브릿지 "아무리 애써도… 잊으려 할 때마다 추억이 다시 돌아온다"는 대목',
+        '벌스에서 "잠들려 했지만" 식으로 감정을 억누르려는 시도를 묘사',
+        '코러스에서 그 감정을 억누르지 못하고 그리움으로 가득 찬다고 인정하며 해소',
+        '"갑자기"라는 제목 단어를 코러스마다 반복 배치',
+        '11명 중 9명만 재결합했음에도 "완전체 재결합"으로 소비됐다 — 완벽하지 않은 재회가 오히려 그리움의 서사를 강화',
+        '① 발매 캠페인 타이밍(정확히 10주년 당일)을 가사 정서와 맞추기 ② 원년 멤버가 직접 가사를 쓰게 해 서사의 진정성 확보 ③ 불완전한 재결합도 "그리움"으로 포장해 서사화하기'
+      ]
+    },
+    {
+      title:"Choosin' Texas", artist:'Ella Langley', dot:'B',
+      genre:['컨트리'], theme:'연인의 마음이 나 대신 텍사스(고향)로 향하는 것을 지켜보는 이별의 예감',
+      credit:'2nd 앨범 「Dandelion」 리드싱글(2025.10.17) · 공동작사 Miranda Lambert, Luke Dick, Joybeth Taylor · D♭장조, 112 BPM · 빌보드 핫100·컨트리송·컨트리에어플레이 3개 차트 동시 1위(여성 아티스트 최초), 핫100 12주 1위(여성 컨트리 아티스트 최장 기록)',
+      a:[
+        '그 사람의 마음이 나 대신 텍사스로 향하는 걸 지켜보는 노래',
+        '타이틀 훅 "Choosin\' Texas"가 처음 등장하는 코러스 진입부',
+        '조지 스트레이트 「Amarillo by Morning」, 제리 리드 「East Bound and Down」, 로니 밀샙 「Smoky Mountain Rain」 등 컨트리 클래식을 가사에서 직접 인용해 장르 계보에 스스로를 위치시킴',
+        '미란다 램버트와 공동 작사·프로듀싱했다는 점, 작업 리트릿에서 짧은 시간에 완성됐다는 제작 비화(정확한 1차 출처 확인은 어려움, 반복 회자되는 일화)',
+        '클래식 컨트리 곡들을 인용하며 이별을 받아들이는 대목에서 체념과 자기 인정으로 전환',
+        '연인의 마음이 떠나가는 것을 지켜보기만 하는 화자의 무력감 묘사',
+        '"이건 원래 이런 노래들의 전통"이라는 식으로 장르 계보를 인용해 감정을 정당화·수용',
+        '코러스 훅 "Choosin\' Texas" 반복',
+        '여성 아티스트 최초로 핫100·핫컨트리송·컨트리에어플레이 3개 차트 동시 1위, 핫100 역대 여성 컨트리 아티스트 최장 1위(12주) 기록 — 상업적으로 이례적인 성취',
+        '① 장르의 클래식을 직접 인용해 계보 안에 자기 곡을 위치시키기 ② 화자를 무력한 관찰자로 두고 체념의 감정선 설계 ③ 짧은 세션에서 나온 아이디어를 다듬어 완성하는 작업 방식'
+      ]
+    },
+    {
+      title:'Dai Dai', artist:'Shakira ft. Burna Boy', dot:'Y',
+      genre:['아프로비트','월드뮤직'], theme:'2026 FIFA 월드컵(캐나다·멕시코·미국) 공식 응원가 — 축구 영웅들을 호명하며 힘내라는 동기부여 앤섬',
+      credit:'작사 Shakira, Burna Boy, Alexander Castillo, Benny Adam, Jon Bellion, Ed Sheeran · 영어·스페인어·이탈리아어·프랑스어·일본어 5개 언어 · MV 연출 Hannah Lux Davis, 메시·음바페·홀란 카메오 · 글로벌200 3위',
+      a:[
+        '축구의 전설들을 호명하며 "다 걸어라"라고 외치는 응원가',
+        '이탈리아어 속어로 "자 해봐/다 걸어라"라는 뜻의 타이틀 훅 "Dai Dai"를 외치는 구간',
+        '영어·스페인어·이탈리아어·프랑스어·일본어 5개 언어로 불리며 에드 시런·존 벨리언 등 6명이 공동 작사',
+        '펠레, 마라도나, 호날두, 메시, 살라 등 축구 전설들의 이름을 가사에 직접 호명',
+        '언어가 전환될 때마다(영어→스페인어→이탈리아어 등) 곡의 무드가 새롭게 환기되는 지점',
+        '낯선 언어 구간이 다음 섹션에 대한 기대를 만들며 긴장 조성',
+        '"Dai Dai" 훅이 모든 언어 구간을 관통하는 공통의 앵커로 작동해 해소',
+        '"Dai Dai" 훅을 각 언어 파트 전환마다 반복 배치해 응집력 유지',
+        '두 아티스트의 원래 장르(라틴팝 vs 아프로비트)가 아니라 월드컵이라는 제3의 이벤트가 곡을 하나로 묶는 프레임이 됨',
+        '① 다국어 훅으로 글로벌 이벤트에 맞는 보편성 만들기 ② 실존 아이콘을 직접 호명해 정서적 앵커 만들기 ③ 하나의 훅 구절로 여러 언어 파트를 접착하기'
+      ]
+    },
+    {
+      title:'hate that i made you love me', artist:'Ariana Grande', dot:'S',
+      genre:['팝','신스팝×R&B'], theme:'표면적으로는 이별 노래지만, 평단은 유명세와 대중의 시선에 대한 이중적 은유로 해석',
+      credit:'앨범 「Petal」 리드싱글(2026.05.29) · 작사·프로듀싱 Ariana Grande, Max Martin, Ilya Salmanzadeh · 자신의 레이블 Babydoll Music 첫 발매 · 빌보드 핫100 통산 10번째 1위, 글로벌200 1위',
+      a:[
+        '너를 나를 사랑하게 만든 게 싫다는 죄책감 섞인 고백이자 유명세에 대한 이중적 발언',
+        '맥스 마틴·일리야 살만자데 특유의 신스팝 사운드 위로 제목 프레이즈가 처음 완창되는 코러스 진입부',
+        '표면적 연애 가사 아래 "미디어의 시선"이라는 이중적 의미를 숨긴 구조 — 평단 해석이 갈림(Vulture "따분하다" vs Stereogum "기묘함이 매력")',
+        '자신의 레이블(Babydoll Music)을 통해 낸 첫 싱글이라는 사업적 선언과 곡의 메시지가 겹쳐 보임',
+        '벌스의 담담한 고백에서 코러스 훅으로 전환되는 지점',
+        '다운템포 프로덕션으로 감정을 절제해서 눌러둠',
+        '신스팝 코러스에서 사운드가 확장되며 절제됐던 감정이 풀림',
+        '제목 프레이즈를 코러스마다 반복',
+        '이별 노래처럼 들리지만 대중의 사랑/시선에 대한 발언일 수 있다는 이중 해석 — 핫100 10번째 1위 곡인데 평단 반응은 극과 극으로 갈렸다',
+        '① 표면적 주제(연애) 아래 다른 층위(사업·유명세)를 숨겨 이중 해석 여지 만들기 ② 벌스는 절제, 코러스는 확장하는 다운템포-신스팝 대비 ③ 발매 시점의 개인적 서사를 곡 메시지와 겹치게 설계하기'
+      ]
+    },
+    {
+      title:'back to friends', artist:'sombr', dot:'S',
+      genre:['인디팝','베드룸팝'], theme:'하룻밤을 보낸 뒤 다시 "그냥 친구"로 돌아갈 수 있는지에 대한 회의',
+      credit:'작사·프로듀싱 sombr 단독 작업 · D♭장조, 93 BPM · 2025.04.12 빌보드 핫100 진입, 최고 7위, 52주 이상 차트인',
+      a:[
+        '"같이 잤는데 어떻게 다시 친구로 돌아가?"라는 질문 하나',
+        '훅 라인 "How can we go back to being friends when we just shared a bed?"이 처음 나오는 순간',
+        '작사부터 프로듀싱까지 sombr 혼자 작업 — 로우파이 질감을 의도적으로 유지',
+        '훅 문장 하나가 질문형으로 던져지며 완결되지 않은 채 곡 내내 맴돎',
+        '같은 훅 문장이 반복될 때마다 미묘하게 다른 무게로 다가오는 지점 ("2014년 텀블러 그런지 정서"라는 평가)',
+        '질문형 훅을 답 없이 반복해서 미해결 상태를 유지',
+        '명확한 해소 없이 같은 질문을 곡 내내 반복 — 감정을 풀지 않고 남겨두는 것 자체가 장치',
+        '훅 문장을 거의 그대로 반복 재생 — 숏폼 클립 루프에 최적화된 구조',
+        '화려한 프로덕션 없는 로우파이 베드룸팝 한 곡이 빌보드 핫100 7위까지 오르고 52주 이상 차트에 머묾',
+        '① 훅을 질문형으로 던져 답을 유보하기 ② 로우파이 질감을 결점이 아니라 정서적 장치로 쓰기 ③ 짧고 단순한 문장 하나에 곡 전체를 걸기'
+      ]
+    }
+  ];
+
+  var anatomyList = document.getElementById('anatomyList');
+  var anatomyDetail = document.getElementById('anatomyDetail');
+
+  function renderAnatomy(idx){
+    var s = songs[idx];
+    anatomyList.querySelectorAll('.anatomy-item').forEach(function(el,i){
+      el.classList.toggle('active', i === idx);
+    });
+    var genreHtml = s.genre.map(function(g){ return '<span class="tagpill">'+g+'</span>'; }).join('');
+    var qaHtml = s.a.map(function(ans, i){
+      return '<div class="qa-item"><div class="q"><span class="qn">'+(i+1)+'</span>'+QLABELS[i]+'</div><div class="ans">'+ans+'</div></div>';
+    }).join('');
+    anatomyDetail.style.setProperty('--dot', COLORS[s.dot]);
+    anatomyDetail.innerHTML =
+      '<div class="anatomy-head">' +
+        '<div><h3>'+s.title+'</h3><div class="by">'+s.artist+'</div></div>' +
+        '<div class="genre-row">'+genreHtml+'</div>' +
+      '</div>' +
+      '<div class="theme-line" style="border-color:'+COLORS[s.dot]+'"><b>주제</b>'+s.theme+'</div>' +
+      '<div class="credit-line">🎼 '+s.credit+'</div>' +
+      '<div class="qa-grid">'+qaHtml+'</div>';
+  }
+
+  songs.forEach(function(s, idx){
+    var item = document.createElement('button');
+    item.className = 'anatomy-item';
+    item.style.setProperty('--dot', COLORS[s.dot]);
+    item.innerHTML = '<span class="dot"></span><span class="meta"><div class="t">'+s.title+'</div><div class="a">'+s.artist+'</div></span>';
+    item.addEventListener('click', function(){ renderAnatomy(idx); });
+    anatomyList.appendChild(item);
+  });
+  renderAnatomy(0);
+})();
+</script>
