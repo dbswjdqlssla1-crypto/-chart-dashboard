@@ -391,7 +391,7 @@
     };
     var listenHtml = Object.keys(s.links || {}).map(function(k){
       var m = LISTEN_META[k];
-      return '<a class="listen-btn" href="'+s.links[k]+'" target="_blank" rel="noopener" style="background:'+m.bg+';color:'+m.fg+'"><span class="play">▶</span>'+m.label+'</a>';
+      return '<a class="listen-btn" href="'+s.links[k]+'" style="background:'+m.bg+';color:'+m.fg+'"><span class="play">▶</span>'+m.label+'</a>';
     }).join('');
     var lyricsHtml = (s.lyrics || []).map(function(l){
       return '<div class="lyrics-sec"><div class="ls-label">'+l.label+'</div><div class="ls-text">'+l.text+'</div></div>';
