@@ -40,14 +40,19 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
+  html{background:var(--bg);}
   body{
-    background:var(--bg); color:var(--text);
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 640px 420px at 50% -8%, var(--accent-soft), transparent 62%),
+      var(--bg);
+    color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
     line-height:1.6; -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none;}
-  .wrap{max-width:480px;margin:0 auto;padding:0 18px 56px;}
+  .wrap{max-width:520px;margin:0 auto;padding:0 20px 72px;}
 
   .view{display:none;}
   .view.active{display:block;animation:enter .28s ease both;}
@@ -60,28 +65,32 @@
     background:var(--header-bg);
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
-    padding:calc(env(safe-area-inset-top) + 16px) 18px 14px;
-    margin:0 -18px 20px;
+    padding:calc(env(safe-area-inset-top) + 16px) 20px 14px;
+    margin:0 -20px 20px;
   }
-  .topbar-inner{max-width:480px;margin:0 auto;}
+  .topbar-inner{max-width:520px;margin:0 auto;}
   .eyebrow{
     font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
-    font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;
+    font-size:12px;letter-spacing:0.1em;text-transform:uppercase;
     color:var(--accent);font-weight:700;
     display:flex;align-items:center;gap:8px;
   }
   .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
-  h1{font-size:22px;line-height:1.2;letter-spacing:-0.01em;margin:9px 0 4px;font-weight:800;}
-  .sub{font-size:13.5px;color:var(--text-dim);margin:0 0 12px;}
-  .summary-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-  .summary-pill{
-    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
-    background:var(--accent-soft);color:var(--accent);padding:5px 11px;border-radius:100px;
+  h1{font-size:27px;line-height:1.18;letter-spacing:-0.015em;margin:10px 0 5px;font-weight:800;}
+  .sub{font-size:14.5px;color:var(--text-dim);margin:0 0 16px;}
+
+  /* ---- mini stat strip (echoes desktop's stat cards) ---- */
+  .mini-stats{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:12px;
+    overflow:hidden; margin-bottom:12px;
   }
-  .chart-counts{display:flex;gap:8px;flex-wrap:wrap;}
-  .chart-count{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--text-faint);font-weight:650;}
-  .chart-count i{width:7px;height:7px;border-radius:50%;display:inline-block;}
-  .updated{font-size:11px;color:var(--text-faint);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;margin-top:10px;font-variant-numeric:tabular-nums;}
+  .mini-stat{
+    background:var(--bg-elevated); padding:12px 6px 11px; text-align:center;
+  }
+  .mini-stat .num{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:20px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1;}
+  .mini-stat .lbl{font-size:10px;color:var(--text-faint);font-weight:650;margin-top:5px;letter-spacing:0.01em;}
+  .updated{font-size:11.5px;color:var(--text-faint);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;margin-top:2px;font-variant-numeric:tabular-nums;}
 
   /* ---- back bar (detail views) ---- */
   .backbar{
@@ -89,8 +98,8 @@
     background:var(--header-bg);
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
-    padding:calc(env(safe-area-inset-top) + 12px) 18px 12px;
-    margin:0 -18px 20px;
+    padding:calc(env(safe-area-inset-top) + 12px) 20px 12px;
+    margin:0 -20px 20px;
     display:flex; align-items:center; gap:8px;
   }
   .back-btn{
@@ -109,87 +118,90 @@
     display:block;
     background:var(--bg-elevated);
     border:1px solid var(--line);
-    border-left:3px solid var(--card-accent, var(--accent));
+    border-top:3px solid var(--card-accent, var(--accent));
     border-radius:14px;
-    padding:16px;
-    margin-bottom:12px;
+    padding:18px;
+    margin-bottom:14px;
     box-shadow:var(--shadow);
   }
   .list-card:active{transform:scale(0.985);}
   .lc-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-  .lc-title{font-size:16.5px;font-weight:750;letter-spacing:-0.005em;line-height:1.3;}
-  .lc-artist{font-size:12.5px;color:var(--text-faint);margin-top:3px;}
-  .chevron-right{flex:none;width:20px;height:20px;color:var(--text-faint);margin-top:3px;}
-  .rank-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;}
+  .lc-title{font-size:18px;font-weight:750;letter-spacing:-0.008em;line-height:1.28;}
+  .lc-artist{font-size:13px;color:var(--text-faint);margin-top:3px;}
+  .chevron-right{flex:none;width:22px;height:22px;color:var(--text-faint);margin-top:3px;}
+  .rank-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;}
   .rank-badge{
-    font-size:10.5px;font-weight:750;padding:3px 8px;border-radius:100px;
+    font-size:11.5px;font-weight:750;padding:4px 10px;border-radius:100px;
     color:var(--accent-text);white-space:nowrap;font-variant-numeric:tabular-nums;
   }
-  .teaser{font-size:13px;color:var(--text-dim);margin-top:10px;line-height:1.55;
-    border-top:1px solid var(--line);padding-top:10px;}
+  .teaser{font-size:13.5px;color:var(--text-dim);margin-top:11px;line-height:1.6;
+    border-top:1px solid var(--line);padding-top:11px;}
   .teaser b{color:var(--accent);font-weight:700;}
 
   /* ---- detail view ---- */
-  .d-head{margin-bottom:18px;}
-  .d-title{font-size:23px;font-weight:800;letter-spacing:-0.01em;line-height:1.22;text-wrap:balance;}
-  .d-artist{font-size:14px;color:var(--text-dim);margin-top:4px;}
-  .genre-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .d-head{
+    margin:0 -20px 20px; padding:4px 20px 18px;
+    border-top:3px solid var(--card-accent, var(--accent));
+  }
+  .d-title{font-size:26px;font-weight:800;letter-spacing:-0.015em;line-height:1.2;text-wrap:balance;margin-top:14px;}
+  .d-artist{font-size:14.5px;color:var(--text-dim);margin-top:5px;}
+  .genre-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px;}
   .tagpill{
-    font-size:11px;font-weight:650;padding:4px 10px;border-radius:100px;
+    font-size:11.5px;font-weight:650;padding:5px 11px;border-radius:100px;
     border:1px solid var(--line-strong);color:var(--text-dim);white-space:nowrap;
   }
   .theme-line{
-    font-size:13.5px;color:var(--text);background:var(--bg-card);
+    font-size:14px;color:var(--text);background:var(--bg-card);
     border-left:3px solid var(--card-accent, var(--accent));
-    padding:10px 14px;border-radius:0 8px 8px 0;margin:16px 0 12px;line-height:1.6;
+    padding:12px 15px;border-radius:0 8px 8px 0;margin:18px 0 14px;line-height:1.62;
   }
   .theme-line b{font-weight:750;color:var(--text-faint);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:4px;}
-  .credit-line{font-size:11.5px;color:var(--text-faint);line-height:1.65;margin-bottom:8px;}
+  .credit-line{font-size:12px;color:var(--text-faint);line-height:1.65;margin-bottom:10px;}
   .credit-line b{color:var(--text-dim);}
 
   /* ---- listen buttons ---- */
-  .listen-row{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 2px;}
+  .listen-row{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 2px;}
   .listen-btn{
     display:inline-flex;align-items:center;gap:6px;
-    font-size:12.5px;font-weight:750;padding:10px 16px;border-radius:100px;
+    font-size:13px;font-weight:750;padding:11px 17px;border-radius:100px;
     white-space:nowrap;
   }
   .listen-btn .play{font-size:10px;line-height:1;}
 
   /* ---- lyrics interpretation ---- */
   .lyrics-block{
-    margin:22px 0 6px;padding:16px 16px 6px;
+    margin:24px 0 8px;padding:18px 17px 7px;
     background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
   }
   .lyrics-block h5{
-    font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);
-    font-weight:750;margin:0 0 12px;display:flex;align-items:center;gap:6px;
+    font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);
+    font-weight:750;margin:0 0 13px;display:flex;align-items:center;gap:6px;
   }
-  .lyrics-sec{padding:0 0 12px;}
-  .lyrics-sec .ls-label{font-size:11.5px;font-weight:750;color:var(--card-accent, var(--accent));margin-bottom:4px;}
-  .lyrics-sec .ls-text{font-size:13px;color:var(--text-dim);line-height:1.7;}
-  .lyrics-note{font-size:10.5px;color:var(--text-faint);line-height:1.55;padding:10px 0 4px;border-top:1px dashed var(--line-strong);margin-top:2px;}
+  .lyrics-sec{padding:0 0 13px;}
+  .lyrics-sec .ls-label{font-size:12px;font-weight:750;color:var(--card-accent, var(--accent));margin-bottom:4px;}
+  .lyrics-sec .ls-text{font-size:13.5px;color:var(--text-dim);line-height:1.72;}
+  .lyrics-note{font-size:11px;color:var(--text-faint);line-height:1.58;padding:11px 0 4px;border-top:1px dashed var(--line-strong);margin-top:2px;}
 
-  .qa-item{padding:16px 0;border-top:1px solid var(--line);}
+  .qa-item{padding:17px 0;border-top:1px solid var(--line);}
   .qa-item:first-of-type{border-top:none;padding-top:0;}
   .qa-item .q{
-    font-size:11.5px;font-weight:700;letter-spacing:0.01em;color:var(--accent);
+    font-size:12px;font-weight:700;letter-spacing:0.01em;color:var(--accent);
     margin-bottom:6px;display:flex;gap:7px;align-items:baseline;
   }
   .qa-item .q .qn{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--text-faint);}
-  .qa-item .ans{font-size:13.5px;color:var(--text-dim);line-height:1.68;}
+  .qa-item .ans{font-size:14px;color:var(--text-dim);line-height:1.7;}
 
   .a2hs{
     display:flex; gap:12px; align-items:flex-start;
     background:var(--bg-card); border:1px dashed var(--line-strong); border-radius:14px;
-    padding:16px; margin-top:24px;
+    padding:17px; margin-top:24px;
   }
-  .a2hs .ico{flex:none;width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;}
-  .a2hs h4{font-size:13.5px;margin:0 0 4px;font-weight:700;}
-  .a2hs p{font-size:12px;color:var(--text-faint);margin:0;line-height:1.6;}
+  .a2hs .ico{flex:none;width:36px;height:36px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;}
+  .a2hs h4{font-size:14px;margin:0 0 4px;font-weight:700;}
+  .a2hs p{font-size:12.5px;color:var(--text-faint);margin:0;line-height:1.62;}
   .a2hs b{color:var(--text-dim);}
 
-  footer{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--text-faint);line-height:1.7;}
+  footer{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--text-faint);line-height:1.72;padding-bottom:8px;}
 </style>
 
 <div class="wrap">
@@ -200,13 +212,11 @@
         <div class="eyebrow">New Entry Watch</div>
         <h1>이번 주 신곡 워치</h1>
         <p class="sub">4개 차트에 새로 올라온 곡을 눌러보세요. 데스크탑판과 같은 방식으로 뜯어봤어요.</p>
-        <div class="summary-row">
-          <span class="summary-pill">🆕 신규 4곡</span>
-          <span class="chart-counts">
-            <span class="chart-count"><i style="background:var(--c-spotify)"></i>Spotify 2</span>
-            <span class="chart-count"><i style="background:var(--c-youtube)"></i>YouTube 3</span>
-            <span class="chart-count"><i style="background:var(--c-melon)"></i>Melon 2</span>
-          </span>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="num">4</div><div class="lbl">신규 진입</div></div>
+          <div class="mini-stat"><div class="num" style="color:var(--c-spotify)">2</div><div class="lbl">Spotify</div></div>
+          <div class="mini-stat"><div class="num" style="color:var(--c-youtube)">3</div><div class="lbl">YouTube</div></div>
+          <div class="mini-stat"><div class="num" style="color:var(--c-melon)">2</div><div class="lbl">Melon</div></div>
         </div>
         <div class="updated">2026.07.11 기준 · 첫 번째 에디션</div>
       </div>
