@@ -198,6 +198,23 @@
   .lyrics-sec .ls-text{font-size:13.5px;color:var(--text-dim);line-height:1.72;}
   .lyrics-note{font-size:11px;color:var(--text-faint);line-height:1.58;padding:11px 0 4px;border-top:1px dashed var(--line-strong);margin-top:2px;}
 
+  /* ---- musical anatomy (genre / history / instruments / rhythm / melody) ---- */
+  .music-block{
+    margin:16px 0 8px;padding:18px 17px 6px;
+    background:var(--bg-elevated);border:1px solid var(--line);border-radius:14px;
+  }
+  .music-block h5{
+    font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);
+    font-weight:750;margin:0 0 4px;display:flex;align-items:center;gap:6px;
+  }
+  .music-sec{padding:13px 0;border-top:1px solid var(--line);}
+  .music-sec .ms-label{
+    font-size:11.5px;font-weight:750;color:var(--card-accent, var(--accent));
+    margin-bottom:5px;display:flex;align-items:center;gap:6px;
+  }
+  .music-sec .ms-icon{font-size:13px;line-height:1;}
+  .music-sec .ms-text{font-size:13.5px;color:var(--text-dim);line-height:1.72;}
+
   .qa-item{padding:17px 0;border-top:1px solid var(--line);}
   .qa-item:first-of-type{border-top:none;padding-top:0;}
   .qa-item .q{
@@ -286,6 +303,13 @@
       credit:'작곡 Sean Cook, McKay Stevens, Dyvahh · 작사 9인(Justin Tranter, Madison Love 외) · MV 연출 Cody Critcheloe · 빌리프랩·소스뮤직·HYBE UMG 3사 최초 합작(2026.06.12 발매)',
       links:{spotify:'https://open.spotify.com/track/6fjpEALt0aBcM2rQZtlHHe', youtube:'https://music.youtube.com/watch?v=27C4pfRsf9g', melon:'https://www.melon.com/search/song/index.htm?q=ICONIC+BY+MISTAKE'},
       whySold:'3개 서로 다른 소속사가 유닛 결성 없이 합작한다는 것 자체가 업계 최초 사건이라 발매 전부터 화제성이 보장됐어요. 각 그룹의 팬덤이 동시에 스트리밍에 참여하며 초반 화력이 배가됐고, 공개 30시간 만에 유튜브 글로벌 1위를 찍은 것도 "조합 자체가 뉴스"라는 마케팅이 제대로 먹힌 결과예요. 다만 평단 반응은 꽤 엇갈렸어요(한 매체 5점 만점에 2점) — 화제성이 완성도와 반드시 비례하지는 않는다는 걸 보여주는 사례.',
+      music:[
+        {icon:'🏷️', label:'장르', text:'얼터너티브 팝 / 하이퍼팝 성향 — 하이퍼팝은 기존 팝 문법을 과장·왜곡해 극단으로 밀어붙이는 장르예요. 오토튠을 과도하게 입힌 보컬, 일그러지고 글리치한 신스, EDM·힙합·댄스 요소를 빠르게 이어붙이는 게 특징.'},
+        {icon:'📜', label:'역사', text:'2013년 A.G. Cook의 레이블 PC Music(Sophie, Hannah Diamond 등)에서 시작된 "버블검 베이스" 스타일이 뿌리예요. 2019년 100 gecs "Money Machine"이 화제를 모으며 스포티파이가 "Hyperpop" 플레이리스트를 만들어 장르명이 대중화됐고, 이후 팝 주류로도 스며들었어요.'},
+        {icon:'🎸', label:'악기', text:'전통 악기보다 소프트웨어 신스와 프로그래밍이 중심 — 왜곡된 리드 신스, 브레이크비트 드럼, 오토튠 보컬 프로세싱이 핵심 사운드 재료예요.'},
+        {icon:'🥁', label:'리듬', text:'150 BPM, D장조, 2분 57초 — 팝 곡치고 빠른 템포로, 아이돌 곡 특유의 잦은 파트 전환과 잘 맞물려요.'},
+        {icon:'🎶', label:'멜로디', text:'9인의 작곡가가 참여해 세 그룹이 벌스를 짧게 릴레이하는 구조라, 하나의 긴 멜로디 라인보다 짧은 훅들이 이어붙는 방식에 가까워요. 코러스에서만 멜로디가 하나로 합쳐지며 통일감을 줘요.'}
+      ],
       lyrics:[
         {label:'벌스', text:'온라인에서 쏟아지는 비난과 억측을 하나씩 나열하며 시작해요 — "다 너 때문이야"라는 시선들을 담담히 읊는 톤.'},
         {label:'프리코러스 → 후렴', text:'그 시선을 받아치는 쪽으로 전환돼요. "Thank you for the comments / It\'s because of all your hate / I am iconic by mistake" — 악플조차 자신들을 아이코닉하게 만든 재료였다고 뒤집는 반전 화법.'},
@@ -311,6 +335,13 @@
       credit:'작사 Shakira, Burna Boy, Alexander Castillo, Benny Adam, Jon Bellion, Ed Sheeran · 영어·스페인어·이탈리아어·프랑스어·일본어 5개 언어 · MV 연출 Hannah Lux Davis, 메시·음바페·홀란 카메오',
       links:{spotify:'https://open.spotify.com/track/0kosUz0jePvjiz4ctmR6wL', youtube:'https://music.youtube.com/watch?v=fcnDmrtj6Sk'},
       whySold:'2026 FIFA 월드컵 공식 응원가라는 타이틀 자체가 전 세계 수억 명이 지켜보는 이벤트에 곡을 얹은 것이라 마케팅 노출 규모가 다른 신곡과 비교가 안 돼요. 샤키라(라틴)와 버나보이(아프로비트)라는 서로 다른 팬덤을 하나로 묶었고, 5개 언어로 불러 특정 시장에 국한되지 않게 설계됐어요. 축구 레전드 이름을 가사에 넣어 스포츠 팬 커뮤니티의 자발적 확산(밈, 응원 영상)까지 끌어냈고요.',
+      music:[
+        {icon:'🏷️', label:'장르', text:'아프로비츠(Afrobeats) — 1960년대 나이지리아 펠라 쿠티가 재즈·펑크와 아프리카 전통음악을 섞어 만든 원조 "아프로비트(Afrobeat)"와 달리, 21세기 들어 힙합·하우스·댄스홀 등과 섞인 대중적 파생 장르예요. 이 곡은 후자에 가까워요.'},
+        {icon:'📜', label:'역사', text:'아프로비트의 폴리리듬(여러 리듬이 동시에 얽히는 구조)을 계승하면서, 2010년대 이후 신스와 프로그래밍된 드럼으로 현대화되며 전 세계 팝 차트에 진출한 흐름의 연장선에 있어요.'},
+        {icon:'🎸', label:'악기', text:'원조 아프로비트는 드럼·베이스·일렉기타·색소폰·트럼펫에 콩가·쉐케레 같은 퍼커션이 핵심인 대형 밴드 편성이지만, 이 곡은 스타디움 앤섬에 맞게 프로그래밍된 퍼커션과 신스 레이어 중심으로 재구성됐어요.'},
+        {icon:'🥁', label:'리듬', text:'116 BPM, C#단조 — 댄서블하고 에너지가 고른 미드템포. 아프로비트 특유의 당김음(싱코페이션) 퍼커션이 계속 겹쳐 쌓이는 구조예요.'},
+        {icon:'🎶', label:'멜로디', text:'5개 언어를 오가며 짧은 프레이즈 단위로 멜로디가 나뉘는데, "Dai Dai" 훅만은 모든 언어 구간에서 똑같이 반복돼 멜로디의 "닻" 역할을 해요.'}
+      ],
       lyrics:[
         {label:'도입', text:'조용한 퍼커션 위로 여러 언어의 인사말이 겹쳐지며 시작해요.'},
         {label:'벌스', text:'펠레, 마라도나 같은 축구 레전드들의 이름을 하나씩 부르며 "너도 저들처럼 될 수 있다"고 북돋는 구조예요.'},
@@ -337,6 +368,13 @@
       credit:'3rd 미니앨범 「I.O.I: LOOP」 타이틀곡(2026.05.19) · 작사 참여 전소미 · 11명 중 9명 재결합(강미나·저우제치옹 불참) · 데뷔 10주년(5.4) 프리릴리즈 「Goodbye With A Smile」 선공개',
       links:{spotify:'https://open.spotify.com/search/I.O.I%20갑자기', youtube:'https://music.youtube.com/watch?v=Jxgbfc89hNI', melon:'https://www.melon.com/song/detail.htm?songId=602024048'},
       whySold:'10주년 재결합이라는 서사 자체가 이미 확보된 팬덤(과거 아이오아이 팬 전체)을 컴백 첫날부터 총동원시켰어요. 정확히 데뷔 10주년 당일 프리릴리즈를 깔아둔 마케팅 타이밍도 초기 화제성을 극대화했고, 국내 음원사이트는 발매 초반 스트리밍 총공이 순위를 좌우하는 구조라 이 컴백 서사가 차트 성적에 직접 반영됐어요.',
+      music:[
+        {icon:'🏷️', label:'장르', text:'신스팝 — 신디사이저가 곡을 주도하는 팝 장르로, 록의 연주 관습 대신 "합성된 질감"과 기계적인 정교함이 특징이에요.'},
+        {icon:'📜', label:'역사', text:'1970년대 말 영국·일본에서 포스트펑크·뉴웨이브 흐름 속에 등장했고, 크라프트베르크 같은 크라우트록 밴드의 영향을 받았어요. 1980년대 개리 뉴먼의 성공 이후 확산됐는데, 고립감·공허함 같은 정서가 전통적인 신스팝 가사 소재였어요 — 이 곡의 "그리움" 정서도 그 계보와 통해요.'},
+        {icon:'🎸', label:'악기', text:'전통적 신스팝은 미니무그 같은 초기 신시사이저와 롤랜드 TR-808 드럼머신이 핵심이었고, 이 곡도 신스 아르페지오와 프로그래밍된 드럼이 중심이에요.'},
+        {icon:'🥁', label:'리듬', text:'117 BPM의 미드템포. 정확한 조성(키) 정보는 공개 음악 분석 데이터베이스에서 확인되지 않았어요.'},
+        {icon:'🎶', label:'멜로디', text:'1절은 좁은 음역에서 속삭이듯 시작해 코러스에서 넓어지는 구조 — 벌스와 코러스의 음역 대비로 감정 곡선을 만드는 전형적인 K팝 발라드형 멜로디 설계예요.'}
+      ],
       lyrics:[
         {label:'벌스 1', text:'"잠들려 했지만 갑자기 네 생각에 빠진다"는 평범한 밤, 예고 없이 떠오르는 그리움을 그려요.'},
         {label:'프리코러스', text:'그 감정을 애써 누르려 하지만 뜻대로 되지 않는 상태를 묘사해요.'},
@@ -364,6 +402,13 @@
       credit:'BigHit Music 3번째 그룹(BTS·TXT 다음, 2025.08.18 데뷔) · 2nd 미니앨범 「GREENGREEN」 프리릴리즈 타이틀곡(2026.04.20) · 작사·작곡 멤버 전원 참여 · 프로듀싱 Supreme Boi, Hiss Noise 외 · 멜론 3주 연속 1위(트리플크라운) · 스포티파이 1억 스트림 돌파(5년 내 데뷔 K팝 보이그룹 최速)',
       links:{spotify:'https://open.spotify.com/track/2fCwv2ppU5nTRTckomIGsd', youtube:'https://music.youtube.com/watch?v=U6BDbXIah-Y', melon:'https://www.melon.com/search/song/index.htm?q=REDRED+CORTIS'},
       whySold:'BigHit Music이라는 이름값(BTS·TXT를 배출한 레이블)이 신인 그룹에 대한 신뢰도를 미리 깔아준 상태에서 데뷔했고, 실제로 데뷔 EP가 빌보드200 15위(K팝 그룹 데뷔 앨범 역대 2위)에 오르며 그 기대를 증명했어요. "눈치보지 말고 진짜 나로 살자"는 메시지가 자기표현을 중시하는 Z세대 정서와 맞아떨어졌고, 레이지 힙합이라는 낯선 장르 선택이 오히려 "비주얼만 좋다"는 회의론을 실력으로 눌러버리는 효과를 냈어요(멜론 3주 연속 1위, 스포티파이 1억 스트림).',
+      music:[
+        {icon:'🏷️', label:'장르', text:'레이지 힙합(Rage) — 트랩의 하위 장르로, EDM 영향을 받은 스테레오 신스 리드가 짧은 루프 멜로디를 반복하고, 과열된(overdriven) 808 베이스와 두껍게 오토튠을 입힌 왜곡 보컬이 특징이에요.'},
+        {icon:'📜', label:'역사', text:'2021년 Trippie Redd와 Playboi Carti의 "Miss the Rage"로 용어가 대중화됐고, Playboi Carti·Lil Uzi Vert·Trippie Redd가 초기 개척자예요. F1lthy, Pi\'erre Bourne 같은 프로듀서들이 비디오게임 음악에서 영향받은 신스 멜로디와 트랩 비트를 결합하며 장르를 다졌어요.'},
+        {icon:'🎸', label:'악기', text:'실제 악기보다 리드 신스와 808 드럼머신이 중심 — 게임 사운드트랙을 연상시키는 신스 멜로디와 두껍게 눌린 베이스가 핵심 사운드예요.'},
+        {icon:'🥁', label:'리듬', text:'약 121 BPM(분석 사이트마다 121~122 BPM으로 소폭 다르게 보고됨), 조성도 C장조·D단조 등 소스마다 엇갈려요(공개 분석 데이터베이스 간 불일치라 참고용으로만 보세요). 4/4박자에 에너지가 높고 댄서블함.'},
+        {icon:'🎶', label:'멜로디', text:'"Being Easily Swayed… That\'s Red, Red" 같은 짧은 루프 멜로디를 반복하는 rage 장르 특유의 구조 — 하나의 큰 멜로디보다 짧은 훅을 여러 번 반복해 각인시키는 방식이에요.'}
+      ],
       lyrics:[
         {label:'벌스', text:'눈치보고, 유행에 휩쓸리고, 쿨한 척하는 모습들을 하나씩 나열하며 각각을 "레드"로 낙인찍어요.'},
         {label:'후렴', text:'"Being Easily Swayed (That\'s Red, Red)… Jump Over The Fence, Green, Green" — 레드를 나열하다 울타리를 넘어 그린으로 도약해요.'},
@@ -418,6 +463,9 @@
     var lyricsHtml = (s.lyrics || []).map(function(l){
       return '<div class="lyrics-sec"><div class="ls-label">'+l.label+'</div><div class="ls-text">'+l.text+'</div></div>';
     }).join('');
+    var musicHtml = (s.music || []).map(function(m){
+      return '<div class="music-sec"><div class="ms-label"><span class="ms-icon">'+m.icon+'</span>'+m.label+'</div><div class="ms-text">'+m.text+'</div></div>';
+    }).join('');
     var qaHtml = s.a.map(function(ans, i){
       return '<div class="qa-item"><div class="q"><span class="qn">'+(i+1)+'</span>'+QLABELS[i]+'</div><div class="ans">'+ans+'</div></div>';
     }).join('');
@@ -439,6 +487,7 @@
       '<div class="lyrics-block"><h5>📝 가사 해석</h5>' + lyricsHtml +
         '<div class="lyrics-note">저작권 보호를 위해 가사 전문 대신 구간별 해석과 짧은 인용만 담았어요. 전체 가사는 위 "듣기" 버튼을 눌러 각 플랫폼에서 확인하세요.</div>' +
       '</div>' +
+      (musicHtml ? '<div class="music-block"><h5>🎧 음악적 분석</h5>' + musicHtml + '</div>' : '') +
       qaHtml;
     detailContainer.appendChild(detail);
   });
